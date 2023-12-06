@@ -76,6 +76,30 @@
 	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
 	  <None Remove="Handlers\" />
 	  <None Remove="Messages\" />
+	  <None Remove="Platforms\Android\lib\armeabi-v7a\libssl.so" />
+	  <None Remove="Platforms\Android\lib\armeabi-v7a\libopenh264.so" />
+	  <None Remove="Platforms\Android\lib\armeabi-v7a\libcrypto.so" />
+	  <None Remove="Platforms\Android\lib\armeabi-v7a\libc++_shared.so" />
+	  <None Remove="Platforms\Android\lib\armeabi-v7a\libpjsua2.so" />
+	  <None Remove="Platforms\Android\lib\x86\libssl.so" />
+	  <None Remove="Platforms\Android\lib\x86\libopenh264.so" />
+	  <None Remove="Platforms\Android\lib\x86\libcrypto.so" />
+	  <None Remove="Platforms\Android\lib\x86\libc++_shared.so" />
+	  <None Remove="Platforms\Android\lib\x86\libpjsua2.so" />
+	  <None Remove="Platforms\Android\lib\arm64-v8a\libssl.so" />
+	  <None Remove="Platforms\Android\lib\arm64-v8a\libopenh264.so" />
+	  <None Remove="Platforms\Android\lib\arm64-v8a\libcrypto.so" />
+	  <None Remove="Platforms\Android\lib\arm64-v8a\libc++_shared.so" />
+	  <None Remove="Platforms\Android\lib\arm64-v8a\libpjsua2.so" />
+	  <None Remove="Platforms\Android\lib\x86_64\libssl.so" />
+	  <None Remove="Platforms\Android\lib\x86_64\libopenh264.so" />
+	  <None Remove="Platforms\Android\lib\x86_64\libcrypto.so" />
+	  <None Remove="Platforms\Android\lib\x86_64\libc++_shared.so" />
+	  <None Remove="Platforms\Android\lib\x86_64\libpjsua2.so" />
+	  <None Remove="Platforms\Android\org\pjsip\PjCamera2.java" />
+	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo.java" />
+	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo2.java" />
+	  <None Remove="Platforms\Android\org\pjsip\PjCamera.java" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -87,5 +111,81 @@
 	  <BundleResource Include="Resources\Fonts\fa-v4compatibility.ttf" />
 	  <BundleResource Include="Resources\Fonts\fa-regular-400.ttf" />
 	  <BundleResource Include="Resources\Fonts\fa-brands-400.ttf" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libssl.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libopenh264.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libcrypto.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libc++_shared.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libpjsua2.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libssl.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libopenh264.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libcrypto.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libc++_shared.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libpjsua2.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libssl.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libopenh264.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libcrypto.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libc++_shared.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libpjsua2.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libssl.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libopenh264.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libcrypto.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libc++_shared.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libpjsua2.so">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </AndroidNativeLibrary>
+	</ItemGroup>
+	<ItemGroup>
+	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCamera2.java">
+	    <Bind></Bind>
+	  </AndroidJavaSource>
+	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCameraInfo.java">
+	    <Bind></Bind>
+	  </AndroidJavaSource>
+	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCameraInfo2.java">
+	    <Bind></Bind>
+	  </AndroidJavaSource>
+	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCamera.java">
+	    <Bind></Bind>
+	  </AndroidJavaSource>
 	</ItemGroup>
 </Project>
