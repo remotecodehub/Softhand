@@ -1,4 +1,6 @@
-﻿using pjsua2xamarin.pjsua2;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using pjsua2xamarin.pjsua2;
+using Softhand.Messages;
 using Softhand.Models;
 using Softhand.ViewModels;
 
@@ -19,7 +21,7 @@ namespace Softhand.Views
 
         async void Ok_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "SaveAccountConfig", viewModel.accCfg);
+            WeakReferenceMessenger.Default.Send(new SaveAccountConfigMessage(viewModel.accCfg));
             await Navigation.PopAsync();
         }
 

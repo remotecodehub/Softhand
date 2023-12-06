@@ -19,7 +19,7 @@ namespace Softhand.Views
 
         async void Ok_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "SaveAccountConfig", viewModel.accCfg);
+            //MessagingCenter.Send(this, "SaveAccountConfig", viewModel.accCfg);
             await Navigation.PopAsync();
         }
 

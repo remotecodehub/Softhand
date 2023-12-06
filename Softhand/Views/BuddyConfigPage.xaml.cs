@@ -1,6 +1,9 @@
-﻿using Softhand.ViewModels;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Softhand.Messages;
+using Softhand.ViewModels;
+
 namespace Softhand.Views
-{    
+{
     public partial class BuddyConfigPage : ContentPage
     {
         private bool isAdd;
@@ -25,9 +28,14 @@ namespace Softhand.Views
 
         async public void Ok_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, isAdd?"AddBuddy":"EditBuddy",
-                                 budCfgViewModel.buddyConfig);
-
+            if (isAdd)
+            {
+                WeakReferenceMessenger.Default.Send(new AddBuddyMessage(budCfgViewModel.buddyConfig));
+            }
+            else
+            {
+                WeakReferenceMessenger.Default.Send(new EditBuddyMessage(budCfgViewModel.buddyConfig));
+            }
             await Navigation.PopAsync();
         }
 

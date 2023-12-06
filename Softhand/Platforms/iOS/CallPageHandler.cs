@@ -1,6 +1,8 @@
 ﻿#if __IOS__
+using CommunityToolkit.Mvvm.Messaging;
 using CoreGraphics;
 using pjsua2xamarin.pjsua2;
+using Softhand.Messages;
 using Softhand.Models;
 using Softhand.Views;
 using UIKit;
@@ -16,27 +18,24 @@ public partial class CallPageHandler
     static UILabel peerLabel;
     static UILabel callStatusLabel;
     private static CallInfo lastCallInfo;
-    private CallPage callPage;
+    static CallPage callPage;
     public CallPageHandler()
     {
-        MessagingCenter.Subscribe<BuddyPage, CallInfo>
-                    (this, "UpdateCallState", (obj, info) => {
-                        lastCallInfo = info as CallInfo;
-                        Device.BeginInvokeOnMainThread(() => {
-                            updateCallState(lastCallInfo);
-                        });
+        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
+        {
+            lastCallInfo = m.Value as CallInfo;
+            Dispatcher.GetForCurrentThread().Dispatch(() => updateCallState(lastCallInfo));
 
-                        if (lastCallInfo.state ==
-                            pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
-                        {
-                            Device.BeginInvokeOnMainThread(() => {
-                                //pop call page
-                            });
-                        }
-                    });
-        MessagingCenter.Subscribe<BuddyPage, CallInfo>
-        (this, "UpdateMediaCallState", (obj, info) => {
-            lastCallInfo = info as CallInfo;
+            if (lastCallInfo.state ==
+                pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+            {
+                Dispatcher.GetForCurrentThread().Dispatch(() => { CallPageHandler.callPage.Navigation.PopAsync(); });
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
+        {
+            lastCallInfo = m.Value as CallInfo;
 
             if (SoftApp.currentCall.vidWin != null)
             {
@@ -50,6 +49,7 @@ public partial class CallPageHandler
         Microsoft.Maui.Handlers.ContentViewHandler.ViewCommandMapper["SoftCustomization"] = (handler, view, sender) =>
         {
             var page = (UIView)handler.PlatformView;
+            CallPageHandler.callPage = (CallPage)handler.VirtualView;
             page.BeginInvokeOnMainThread(() => {
                 var controlWidth = 150;
                 var controlHeight = 50;

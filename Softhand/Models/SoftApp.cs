@@ -23,7 +23,7 @@ public class SoftApp
     private TransportConfig sipTpConfig = new TransportConfig();
     private String appDir;
 
-    private const String configName = "pjsua2.json";
+    private const String configName = "Softhand.json";
     private const int SIP_PORT = 6000;
     private const int LOG_LEVEL = 5;
 
@@ -40,7 +40,7 @@ public class SoftApp
         /* Create endpoint */
         try
         {
-            ep.libCreate();
+            Dispatcher.GetForCurrentThread().Dispatch(ep.libCreate);
         }
         catch (Exception e)
         {
@@ -72,12 +72,12 @@ public class SoftApp
         log_cfg.decor += (uint)pj_log_decoration.PJ_LOG_HAS_NEWLINE;
 
         UaConfig ua_cfg = epConfig.uaConfig;
-        ua_cfg.userAgent = "Pjsua2 Xamarin " + ep.libVersion().full;
+        ua_cfg.userAgent = "Softhand " + ep.libVersion().full;
 
         /* Init endpoint */
         try
         {
-            ep.libInit(epConfig);
+            Dispatcher.GetForCurrentThread().Dispatch(() => ep.libInit(epConfig));
         }
         catch (Exception)
         {
@@ -87,8 +87,8 @@ public class SoftApp
         /* Create transports. */
         try
         {
-            ep.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP,
-                               sipTpConfig);
+            Dispatcher.GetForCurrentThread().Dispatch(() => ep.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP,
+                               sipTpConfig));
         }
         catch (Exception e)
         {
@@ -97,24 +97,24 @@ public class SoftApp
 
         try
         {
-            ep.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TCP,
-                               sipTpConfig);
+            Dispatcher.GetForCurrentThread().Dispatch(() => ep.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TCP,
+                               sipTpConfig));
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
 
-        try
-        {
-            sipTpConfig.port = SIP_PORT + 1;
-            ep.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TLS,
-                               sipTpConfig);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        //try
+        //{
+        //    sipTpConfig.port = SIP_PORT + 1;
+        //    Dispatcher.GetForCurrentThread().Dispatch(() => ep.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TLS,
+        //                       sipTpConfig));
+        //}
+        //catch (Exception e)
+        //{
+        //    Console.WriteLine(e.Message);
+        //}
 
         /* Set SIP port back to default for JSON saved config */
         sipTpConfig.port = SIP_PORT;
@@ -132,13 +132,15 @@ public class SoftApp
         account = new SoftAccount(accountConfig);
         try
         {
-            account.create(accountConfig);
+            Dispatcher.GetForCurrentThread().Dispatch(() => {
+                account.create(accountConfig);
 
-            /* Add Buddies */
-            foreach (BuddyConfig budCfg in myAccCfg.buddyCfgs)
-            {
-                account.addBuddy(budCfg);
-            }
+                /* Add Buddies */
+                foreach (BuddyConfig budCfg in myAccCfg.buddyCfgs)
+                {
+                    account.addBuddy(budCfg);
+                }
+            });
         }
         catch (Exception e)
         {
@@ -149,7 +151,7 @@ public class SoftApp
         /* Start. */
         try
         {
-            ep.libStart();
+            Dispatcher.GetForCurrentThread().Dispatch(ep.libStart);
         }
         catch (Exception e)
         {
@@ -180,9 +182,9 @@ public class SoftApp
 
     private void loadConfig(String filename)
     {
+        JsonDocument json = new JsonDocument();
         try
         {
-            JsonDocument json = new JsonDocument();
             /* Load file */
             json.loadFile(filename);
             ContainerNode root = json.getRootContainer();

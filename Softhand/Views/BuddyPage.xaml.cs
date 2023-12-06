@@ -1,4 +1,6 @@
-﻿using pjsua2xamarin.pjsua2;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using pjsua2xamarin.pjsua2;
+using Softhand.Messages;
 using Softhand.Models;
 using Softhand.ViewModels;
 
@@ -17,22 +19,23 @@ namespace Softhand.Views
         {
             CallOpParam prm = new CallOpParam();
 
-            if (SoftApp.currentCall != null) {
+            if (SoftApp.currentCall != null)
+            {
                 call.Dispose();
                 return;
             }
 
             prm.statusCode = (pjsip_status_code.PJSIP_SC_RINGING);
-            try {
+            try
+            {
                 call.answer(prm);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e.Message);
             }
             SoftApp.currentCall = call;
-
-            Device.BeginInvokeOnMainThread(() => {
-                Navigation.PushAsync(new CallPage());
-            });   
+            this.Dispatcher.DispatchAsync(async () => { await Navigation.PushAsync(new CallPage()); });
         }
 
         public void notifyCallState(SoftCall call)
@@ -41,19 +44,21 @@ namespace Softhand.Views
                 return;
 
             CallInfo ci = null;
-            try {
+            try
+            {
                 ci = call.getInfo();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e.Message);
             }
 
             if (ci == null)
                 return;
-
-            MessagingCenter.Send(this, "UpdateCallState", ci);
-
-            if (ci.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED) {
-
+            WeakReferenceMessenger.Default.Send(new UpdateCallStateMessage(ci));
+            
+            if (ci.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+            {
                 ThreadPool.QueueUserWorkItem(deleteCall);
             }
         }
@@ -71,16 +76,18 @@ namespace Softhand.Views
 
             CallInfo ci = null;
 
-            try {
+            try
+            {
                 ci = call.getInfo();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e.Message);
             }
 
             if (ci == null)
                 return;
-
-            MessagingCenter.Send(this, "UpdateMediaCallState", ci);
+            WeakReferenceMessenger.Default.Send(new UpdateMediaCallStateMessage(ci));
         }
         public void notifyBuddyState(SoftBuddy buddy)
         {
@@ -106,77 +113,72 @@ namespace Softhand.Views
                 String config_path = Environment.GetFolderPath(
                                           Environment.SpecialFolder.LocalApplicationData);
                 myApp.init(this, config_path);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e.Message);
             }
 
             BindingContext = buddyViewModel = new BuddyViewModel();
 
-            MessagingCenter.Subscribe<AccountConfigPage, SoftAccountConfigModel>
-                                  (this, "SaveAccountConfig",  (obj, config) =>
+            WeakReferenceMessenger.Default.Register<SaveAccountConfigMessage>(this, (r, m) =>
             {
-                var myCfg = config as SoftAccountConfigModel;
+                var myCfg = m.Value as SoftAccountConfigModel;
                 AccountConfig accCfg = SoftApp.myAccCfg.accCfg;
                 accCfg.idUri = myCfg.idUri;
                 accCfg.regConfig.registrarUri = myCfg.registrarUri;
                 accCfg.sipConfig.proxies.Clear();
-                if (myCfg.proxy != "") {
+                if (myCfg.proxy != "")
+                {
                     accCfg.sipConfig.proxies.Add(myCfg.proxy);
                 }
                 accCfg.sipConfig.authCreds.Clear();
-                if (myCfg.username != "" || myCfg.password != "") {
+                if (myCfg.username != "" || myCfg.password != "")
+                {
                     AuthCredInfo credInfo = new AuthCredInfo();
                     credInfo.username = myCfg.username;
                     credInfo.data = myCfg.password;
                     accCfg.sipConfig.authCreds.Add(credInfo);
                 }
 
-                try {
+                try
+                {
                     SoftApp.account.modify(accCfg);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine(e.Message);
                 }
             });
 
-            MessagingCenter.Subscribe<BuddyConfigPage, BuddyConfig>
-                                  (this, "AddBuddy", (obj, config) =>
+            WeakReferenceMessenger.Default.Register<AddBuddyMessage>(this, (r, m) =>
             {
-                var budCfg = config as BuddyConfig;
+                var budCfg = m.Value as BuddyConfig;
 
-                try {
+                try
+                {
                     SoftApp.account.addBuddy(budCfg);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine(e.Message);
                 }
                 buddyViewModel.LoadBuddiesCommand.Execute(null);
             });
 
-            MessagingCenter.Subscribe<BuddyConfigPage, BuddyConfig>
-                                    (this, "EditBuddy", (obj, config) =>
+            WeakReferenceMessenger.Default.Register<EditBuddyMessage>(this, (r, m) =>
             {
-                var budCfg = config as BuddyConfig;
+                var budCfg = m.Value as BuddyConfig;
 
-                if (buddyViewModel.SelectedBuddy != null) {
+                if (buddyViewModel.SelectedBuddy != null)
+                {
                     SoftApp.account.delBuddy(buddyViewModel.SelectedBuddy);
-                    try {
+                    try
+                    {
                         SoftApp.account.addBuddy(budCfg);
-                    } catch (Exception e) {
-                        Console.WriteLine(e.Message);
                     }
-                    buddyViewModel.LoadBuddiesCommand.Execute(null);
-                }
-            });
-
-            MessagingCenter.Subscribe<BuddyConfigPage, BuddyConfig>
-                                     (this, "EditBuddy", (obj, config) =>
-            {
-                var budCfg = config as BuddyConfig;
-
-                if (buddyViewModel.SelectedBuddy != null) {
-                    SoftApp.account.delBuddy(buddyViewModel.SelectedBuddy);
-                    try {
-                        SoftApp.account.addBuddy(budCfg);
-                    } catch (Exception e) {
+                    catch (Exception e)
+                    {
                         Console.WriteLine(e.Message);
                     }
                     buddyViewModel.LoadBuddiesCommand.Execute(null);
@@ -196,13 +198,17 @@ namespace Softhand.Views
 
         void Call_Clicked(object sender, EventArgs e)
         {
-            if (buddyViewModel.SelectedBuddy != null) {
+            if (buddyViewModel.SelectedBuddy != null)
+            {
                 SoftCall call = new SoftCall(SoftApp.account, -1);
                 CallOpParam prm = new CallOpParam(true);
 
-                try {
+                try
+                {
                     call.makeCall(buddyViewModel.SelectedBuddy.cfg.uri, prm);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex.Message);
                     call.Dispose();
                     return;
@@ -225,7 +231,8 @@ namespace Softhand.Views
 
         void Delete_Clicked(object sender, EventArgs e)
         {
-            if (buddyViewModel.SelectedBuddy != null) {
+            if (buddyViewModel.SelectedBuddy != null)
+            {
                 SoftApp.account.delBuddy(buddyViewModel.SelectedBuddy);
                 BuddiesListView.SelectedItem = null;
                 buddyViewModel.LoadBuddiesCommand.Execute(null);
