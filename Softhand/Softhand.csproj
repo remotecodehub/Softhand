@@ -28,12 +28,15 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<!--<BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	  <TargetPlatformIdentifiers>ios-x64;iossimulator-x64</TargetPlatformIdentifiers>
 	  <MtouchExtraArgs>-cxx -gcc_flags "-L./Platforms/iOS/lib/fat -lpjsua2 -force_load ./Platforms/iOS/lib/fat/libpjsua2.a" </MtouchExtraArgs>
+	  <CodesignProvision>iOS Team Provisioning Profile: com.onboardcode.softhand</CodesignProvision>
+	  <CodesignKey>iPhone Developer</CodesignKey>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
@@ -62,6 +65,27 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Views\" />
+	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
+	  <None Remove="Resources\Fonts\fa-v4compatibility.ttf" />
+	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
+	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
+	  <None Remove="Handlers\" />
+	  <None Remove="Messages\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Views\" />
+	  <Folder Include="Handlers\" />
+	  <Folder Include="Messages\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Fonts\fa-solid-900.ttf" />
+	  <BundleResource Include="Resources\Fonts\fa-v4compatibility.ttf" />
+	  <BundleResource Include="Resources\Fonts\fa-regular-400.ttf" />
+	  <BundleResource Include="Resources\Fonts\fa-brands-400.ttf" />
+	</ItemGroup>
 </Project>
