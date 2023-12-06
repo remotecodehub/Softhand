@@ -1,4 +1,5 @@
-﻿namespace Softhand;
+﻿
+namespace Softhand;
 
 public partial class App : Application
 {
