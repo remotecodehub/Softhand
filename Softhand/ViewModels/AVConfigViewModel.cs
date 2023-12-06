@@ -2,11 +2,11 @@
 
 namespace Softhand.ViewModels;
 
-public class AccountConfigViewModel : BaseViewModel
+public class AVConfigViewModel : BaseViewModel
 {
     public SoftAccountConfigModel accCfg { get; set; }
 
-    public AccountConfigViewModel()
+    public AVConfigViewModel()
     {
         
     }

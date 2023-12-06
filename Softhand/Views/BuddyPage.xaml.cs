@@ -4,20 +4,20 @@ using Softhand.ViewModels;
 
 namespace Softhand.Views
 {
-    public partial class BuddyPage : ContentPage, MyAppObserver
+    public partial class BuddyPage : ContentPage, ISoftObserver
     {
         public BuddyViewModel buddyViewModel { get; set; }
-        public static MyApp myApp = null;
+        public static SoftApp myApp = null;
 
         public void notifyRegState(int code, String reason, long expiration)
         {
 
         }
-        public void notifyIncomingCall(MyCall call)
+        public void notifyIncomingCall(SoftCall call)
         {
             CallOpParam prm = new CallOpParam();
 
-            if (MyApp.currentCall != null) {
+            if (SoftApp.currentCall != null) {
                 call.Dispose();
                 return;
             }
@@ -28,16 +28,16 @@ namespace Softhand.Views
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
-            MyApp.currentCall = call;
+            SoftApp.currentCall = call;
 
             Device.BeginInvokeOnMainThread(() => {
                 Navigation.PushAsync(new CallPage());
             });   
         }
 
-        public void notifyCallState(MyCall call)
+        public void notifyCallState(SoftCall call)
         {
-            if (MyApp.currentCall == null || call.getId() != MyApp.currentCall.getId())
+            if (SoftApp.currentCall == null || call.getId() != SoftApp.currentCall.getId())
                 return;
 
             CallInfo ci = null;
@@ -60,13 +60,13 @@ namespace Softhand.Views
 
         static void deleteCall(Object stateInfo)
         {
-            MyApp.currentCall.Dispose();
-            MyApp.currentCall = null;
+            SoftApp.currentCall.Dispose();
+            SoftApp.currentCall = null;
         }
 
-        public void notifyCallMediaState(MyCall call)
+        public void notifyCallMediaState(SoftCall call)
         {
-            if (MyApp.currentCall == null || call.getId() != MyApp.currentCall.getId())
+            if (SoftApp.currentCall == null || call.getId() != SoftApp.currentCall.getId())
                 return;
 
             CallInfo ci = null;
@@ -82,7 +82,7 @@ namespace Softhand.Views
 
             MessagingCenter.Send(this, "UpdateMediaCallState", ci);
         }
-        public void notifyBuddyState(MyBuddy buddy)
+        public void notifyBuddyState(SoftBuddy buddy)
         {
 
         }
@@ -102,7 +102,7 @@ namespace Softhand.Views
             InitializeComponent();
             try
             {
-                myApp = new MyApp();
+                myApp = new SoftApp();
                 String config_path = Environment.GetFolderPath(
                                           Environment.SpecialFolder.LocalApplicationData);
                 myApp.init(this, config_path);
@@ -112,11 +112,11 @@ namespace Softhand.Views
 
             BindingContext = buddyViewModel = new BuddyViewModel();
 
-            MessagingCenter.Subscribe<AccountConfigPage, MyAccountConfigModel>
+            MessagingCenter.Subscribe<AccountConfigPage, SoftAccountConfigModel>
                                   (this, "SaveAccountConfig",  (obj, config) =>
             {
-                var myCfg = config as MyAccountConfigModel;
-                AccountConfig accCfg = MyApp.myAccCfg.accCfg;
+                var myCfg = config as SoftAccountConfigModel;
+                AccountConfig accCfg = SoftApp.myAccCfg.accCfg;
                 accCfg.idUri = myCfg.idUri;
                 accCfg.regConfig.registrarUri = myCfg.registrarUri;
                 accCfg.sipConfig.proxies.Clear();
@@ -132,7 +132,7 @@ namespace Softhand.Views
                 }
 
                 try {
-                    MyApp.account.modify(accCfg);
+                    SoftApp.account.modify(accCfg);
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
@@ -144,7 +144,7 @@ namespace Softhand.Views
                 var budCfg = config as BuddyConfig;
 
                 try {
-                    MyApp.account.addBuddy(budCfg);
+                    SoftApp.account.addBuddy(budCfg);
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
@@ -157,9 +157,9 @@ namespace Softhand.Views
                 var budCfg = config as BuddyConfig;
 
                 if (buddyViewModel.SelectedBuddy != null) {
-                    MyApp.account.delBuddy(buddyViewModel.SelectedBuddy);
+                    SoftApp.account.delBuddy(buddyViewModel.SelectedBuddy);
                     try {
-                        MyApp.account.addBuddy(budCfg);
+                        SoftApp.account.addBuddy(budCfg);
                     } catch (Exception e) {
                         Console.WriteLine(e.Message);
                     }
@@ -173,9 +173,9 @@ namespace Softhand.Views
                 var budCfg = config as BuddyConfig;
 
                 if (buddyViewModel.SelectedBuddy != null) {
-                    MyApp.account.delBuddy(buddyViewModel.SelectedBuddy);
+                    SoftApp.account.delBuddy(buddyViewModel.SelectedBuddy);
                     try {
-                        MyApp.account.addBuddy(budCfg);
+                        SoftApp.account.addBuddy(budCfg);
                     } catch (Exception e) {
                         Console.WriteLine(e.Message);
                     }
@@ -186,7 +186,7 @@ namespace Softhand.Views
 
         async void Settings_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AccountConfigPage(MyApp.myAccCfg));
+            await Navigation.PushAsync(new AccountConfigPage(SoftApp.myAccCfg));
         }
 
         void Quit_Clicked(object sender, EventArgs e)
@@ -197,7 +197,7 @@ namespace Softhand.Views
         void Call_Clicked(object sender, EventArgs e)
         {
             if (buddyViewModel.SelectedBuddy != null) {
-                MyCall call = new MyCall(MyApp.account, -1);
+                SoftCall call = new SoftCall(SoftApp.account, -1);
                 CallOpParam prm = new CallOpParam(true);
 
                 try {
@@ -207,7 +207,7 @@ namespace Softhand.Views
                     call.Dispose();
                     return;
                 }
-                MyApp.currentCall = call;
+                SoftApp.currentCall = call;
                 Navigation.PushAsync(new CallPage());
             }
         }
@@ -226,7 +226,7 @@ namespace Softhand.Views
         void Delete_Clicked(object sender, EventArgs e)
         {
             if (buddyViewModel.SelectedBuddy != null) {
-                MyApp.account.delBuddy(buddyViewModel.SelectedBuddy);
+                SoftApp.account.delBuddy(buddyViewModel.SelectedBuddy);
                 BuddiesListView.SelectedItem = null;
                 buddyViewModel.LoadBuddiesCommand.Execute(null);
             }

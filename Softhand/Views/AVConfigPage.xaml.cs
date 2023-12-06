@@ -4,15 +4,15 @@ using Softhand.ViewModels;
 
 namespace Softhand.Views
 {
-    public partial class AccountConfigPage : ContentPage
+    public partial class AVConfigPage : ContentPage
     {
-        AccountConfigViewModel viewModel;
+        AVConfigViewModel viewModel;
 
-        public AccountConfigPage(SoftAccountConfig accCfg)
+        public AVConfigPage(SoftAccountConfig accCfg)
         {
             InitializeComponent();
 
-            viewModel = new AccountConfigViewModel();
+            viewModel = new AVConfigViewModel();
             viewModel.init(accCfg);
             BindingContext = viewModel;
         }

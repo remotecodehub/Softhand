@@ -8,29 +8,33 @@
         <viewModels:BuddyConfigViewModel/>
     </ContentPage.BindingContext>
 
-	<ContentPage.Content>
-		<StackLayout VerticalOptions="FillAndExpand"
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand"
 					 HorizontalOptions="FillAndExpand"
 					 x:DataType="viewModels:BuddyConfigViewModel">
-			<StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
-				<StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-					<Label Text="Buddy Id" HorizontalOptions="Start" VerticalOptions="Center"/>
-					<Entry Text="{Binding buddyConfig.uri}" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-				</StackLayout>
-				<StackLayout Orientation="Horizontal" VerticalOptions="Center">
-					<Label Text="Subscribe" HorizontalOptions="Start" />
-					<Switch IsToggled="{Binding buddyConfig.subscribe}" HorizontalOptions="Start" />
-				</StackLayout>
-			</StackLayout>
-			<Grid
-				ColumnDefinitions="50*, 50*"
-				HorizontalOptions="FillAndExpand">
-
-					<Button Text="Ok" Clicked="Ok_Clicked"/>
-					<Button Text="Cancel" Clicked="Cancel_Clicked"/>
-
-			</Grid>
-		</StackLayout>
-	</ContentPage.Content>
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                    <Label Text="Buddy Id" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    <Entry Text="{Binding buddyConfig.uri}" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <Label Text="Subscribe" HorizontalOptions="Start" />
+                    <Switch IsToggled="{Binding buddyConfig.subscribe}" HorizontalOptions="Start" />
+                </StackLayout>
+            </StackLayout>
+  
+                      <Grid VerticalOptions="End"
+				    HorizontalOptions="FillAndExpand">
+           
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="Ok" HorizontalOptions="FillAndExpand"  Clicked="Ok_Clicked" />
+                <Button Grid.Column="1" Text="Cancel" Clicked="Cancel_Clicked"
+                       HorizontalOptions="FillAndExpand" />
+             </Grid>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
 

@@ -2,16 +2,16 @@
 
 namespace Softhand.Models
 {
-    public class MyAccountConfigModel
+    public class SoftAccountConfigModel
     {
         public string idUri { get; set; }
         public string registrarUri { get; set; }
         public string proxy { get; set; }
         public string username { get; set; }
         public string password { get; set; }
-        private MyAccountConfig accConfig;
+        private SoftAccountConfig accConfig;
 
-        public MyAccountConfigModel(MyAccountConfig inAccConfig)
+        public SoftAccountConfigModel(SoftAccountConfig inAccConfig)
         {
             accConfig = inAccConfig;
             AccountConfig accCfg = accConfig.accCfg;

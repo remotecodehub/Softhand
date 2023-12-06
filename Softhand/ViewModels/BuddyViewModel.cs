@@ -5,17 +5,17 @@ namespace Softhand.ViewModels;
 
 public class BuddyViewModel : BaseViewModel
 {
-    private MyBuddy _selectedBuddy;
-    public MyBuddy SelectedBuddy {
+    private SoftBuddy _selectedBuddy;
+    public SoftBuddy SelectedBuddy {
         get { return _selectedBuddy; }
         set { SetProperty(ref _selectedBuddy, value); }
     }
-    public ObservableCollection<MyBuddy> Buddies { get; set; }
+    public ObservableCollection<SoftBuddy> Buddies { get; set; }
     public Command LoadBuddiesCommand { get; set; }
 
     public BuddyViewModel()
     {
-        Buddies = new ObservableCollection<MyBuddy>();
+        Buddies = new ObservableCollection<SoftBuddy>();
         LoadBuddiesCommand = new Command(() => ExecuteLoadBuddiesCommand());
     }
 
@@ -28,7 +28,7 @@ public class BuddyViewModel : BaseViewModel
 
         try {
             Buddies.Clear();
-            foreach (var buddy in MyApp.account.buddyList) {
+            foreach (var buddy in SoftApp.account.buddyList) {
                 Buddies.Add(buddy);
             }
         } catch (Exception e) {

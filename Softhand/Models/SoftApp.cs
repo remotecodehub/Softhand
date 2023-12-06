@@ -10,15 +10,15 @@ namespace Softhand.Models;
 
 
 
-public class MyApp
+public class SoftApp
 {
     public static Endpoint ep = new Endpoint();
-    public static MyCall currentCall = null;
-    public static MyAccount account = null;
-    public static MyAccountConfig myAccCfg;
-    public static MyAppObserver observer;
+    public static SoftCall currentCall = null;
+    public static SoftAccount account = null;
+    public static SoftAccountConfig myAccCfg;
+    public static ISoftObserver observer;
 
-    private static MyLogWriter logWriter = new MyLogWriter();
+    private static SoftLogWriter logWriter = new SoftLogWriter();
     private EpConfig epConfig = new EpConfig();
     private TransportConfig sipTpConfig = new TransportConfig();
     private String appDir;
@@ -27,12 +27,12 @@ public class MyApp
     private const int SIP_PORT = 6000;
     private const int LOG_LEVEL = 5;
 
-    public MyApp()
+    public SoftApp()
     {
 
     }
 
-    public void init(MyAppObserver obs, String app_dir)
+    public void init(ISoftObserver obs, String app_dir)
     {
         observer = obs;
         appDir = app_dir;
@@ -48,7 +48,7 @@ public class MyApp
             return;
         }
 
-        myAccCfg = new MyAccountConfig();
+        myAccCfg = new SoftAccountConfig();
         /* Load config */
         String configPath = appDir + "/" + configName;
         if (File.Exists(configPath))
@@ -67,7 +67,7 @@ public class MyApp
 
         /* Set log config. */
         LogConfig log_cfg = epConfig.logConfig;
-        logWriter = new MyLogWriter();
+        logWriter = new SoftLogWriter();
         log_cfg.writer = logWriter;
         log_cfg.decor += (uint)pj_log_decoration.PJ_LOG_HAS_NEWLINE;
 
@@ -129,7 +129,7 @@ public class MyApp
         accountConfig.mediaConfig.srtpUse = pjmedia_srtp_use.PJMEDIA_SRTP_OPTIONAL;
         accountConfig.mediaConfig.srtpSecureSignaling = 0;
 
-        account = new MyAccount(accountConfig);
+        account = new SoftAccount(accountConfig);
         try
         {
             account.create(accountConfig);
@@ -195,7 +195,7 @@ public class MyApp
             sipTpConfig.readObject(tpNode);
 
             /* Read account config */
-            ContainerNode accNode = root.readContainer("MyAccountConfig");
+            ContainerNode accNode = root.readContainer("SoftAccountConfig");
             myAccCfg.readObject(accNode);
 
             /* Force delete json now */
@@ -209,13 +209,13 @@ public class MyApp
 
     private void buildAccConfigs()
     {
-        MyAccountConfig tmpAccCfg = new MyAccountConfig();
+        SoftAccountConfig tmpAccCfg = new SoftAccountConfig();
         tmpAccCfg.accCfg = account.cfg;
 
         tmpAccCfg.buddyCfgs.Clear();
         for (int j = 0; j < account.buddyList.Count; j++)
         {
-            MyBuddy bud = (MyBuddy)account.buddyList[j];
+            SoftBuddy bud = (SoftBuddy)account.buddyList[j];
             tmpAccCfg.buddyCfgs.Add(bud.cfg);
         }
 
@@ -237,7 +237,7 @@ public class MyApp
 
             /* Write account configs */
             buildAccConfigs();
-            ContainerNode accNode = json.writeNewContainer("MyAccountConfig");
+            ContainerNode accNode = json.writeNewContainer("SoftAccountConfig");
             myAccCfg.writeObject(accNode);
 
             /* Save file */

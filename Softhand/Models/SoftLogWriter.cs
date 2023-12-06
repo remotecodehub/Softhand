@@ -2,7 +2,7 @@
 
 namespace Softhand.Models;
 
-public class MyLogWriter : LogWriter
+public class SoftLogWriter : LogWriter
 {
     override public void write(LogEntry entry)
     {

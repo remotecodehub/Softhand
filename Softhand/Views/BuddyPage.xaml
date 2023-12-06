@@ -29,23 +29,30 @@
 						  IsRefreshing="{Binding IsBusy, Mode=OneWay}"
 						  CachingStrategy="RecycleElement">
 					<ListView.ItemTemplate>
-						<DataTemplate x:DataType="models:MyBuddy">
+						<DataTemplate x:DataType="models:SoftBuddy">
 							<TextCell Text="{Binding cfg.uri}"/>
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>
 			</StackLayout>
-			<StackLayout Orientation="Horizontal" HorizontalOptions="Start"
+			<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand"
 						 VerticalOptions="End">
-				<Button Text="Call" Clicked="Call_Clicked"/>
-				<Button Text="Add"  Clicked="Add_Clicked"/>
+				
 			</StackLayout>
-				<StackLayout Orientation="Horizontal" HorizontalOptions="End"
-						VerticalOptions="End">
-					<Button Text="Edit" Clicked="Edit_Clicked"/>
-					<Button Text="Remove" Clicked="Delete_Clicked"/>
-
-				</StackLayout>
+			<Grid VerticalOptions="End"
+				    HorizontalOptions="FillAndExpand">
+           
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="Call" Clicked="Call_Clicked"/>
+				<Button Grid.Column="1" Text="Add"  Clicked="Add_Clicked"/> 
+				<Button Grid.Column="2" Text="Edit" Clicked="Edit_Clicked"/>
+				<Button Grid.Column="3" Text="Remove" Clicked="Delete_Clicked"/>
+             </Grid>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

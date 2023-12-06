@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:viewModels="clr-namespace:Softhand.ViewModels"
-    x:Class="Softhand.Views.AccountConfigPage"
+    x:Class="Softhand.Views.AVConfigPage"
     Title="Account Config">
 
     <ContentPage.BindingContext>

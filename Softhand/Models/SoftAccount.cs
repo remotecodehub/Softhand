@@ -2,25 +2,25 @@
 
 namespace Softhand.Models;
 
-public class MyAccount : Account
+public class SoftAccount : Account
 {
-    public List<MyBuddy> buddyList = new List<MyBuddy>();
+    public List<SoftBuddy> buddyList = new List<SoftBuddy>();
     public AccountConfig cfg;
 
-    ~MyAccount()
+    ~SoftAccount()
     {
         Console.WriteLine("*** Account is being deleted");
     }
 
-    public MyAccount(AccountConfig config)
+    public SoftAccount(AccountConfig config)
     {
         cfg = config;
     }
 
-    public MyBuddy addBuddy(BuddyConfig bud_cfg)
+    public SoftBuddy addBuddy(BuddyConfig bud_cfg)
     {
         /* Create Buddy */
-        MyBuddy bud = new MyBuddy(bud_cfg);
+        SoftBuddy bud = new SoftBuddy(bud_cfg);
         try
         {
             bud.create(this, bud_cfg);
@@ -44,7 +44,7 @@ public class MyAccount : Account
         return bud;
     }
 
-    public void delBuddy(MyBuddy buddy)
+    public void delBuddy(SoftBuddy buddy)
     {
         buddyList.Remove(buddy);
         buddy.Dispose();
@@ -56,14 +56,14 @@ public class MyAccount : Account
         Console.WriteLine("***" + (ai.regIsActive ? "" : "Un") +
                           "Register: code=" + prm.code);
 
-        MyApp.observer.notifyRegState((int)prm.code, prm.reason, prm.expiration);
+        SoftApp.observer.notifyRegState((int)prm.code, prm.reason, prm.expiration);
     }
 
     override public void onIncomingCall(OnIncomingCallParam prm)
     {
         Console.WriteLine("======== Incoming call ======== ");
-        MyCall call = new MyCall(this, prm.callId);
-        MyApp.observer.notifyIncomingCall(call);
+        SoftCall call = new SoftCall(this, prm.callId);
+        SoftApp.observer.notifyIncomingCall(call);
     }
 
     override public void onInstantMessage(OnInstantMessageParam prm)

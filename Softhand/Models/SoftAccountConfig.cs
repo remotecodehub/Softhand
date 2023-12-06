@@ -2,12 +2,12 @@
 
 namespace Softhand.Models;
 
-public class MyAccountConfig
+public class SoftAccountConfig
 {
     public AccountConfig accCfg;
     public List<BuddyConfig> buddyCfgs = new List<BuddyConfig>();
 
-    public MyAccountConfig()
+    public SoftAccountConfig()
     {
         accCfg = new AccountConfig();
     }

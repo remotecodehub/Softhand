@@ -2,11 +2,11 @@
 
 namespace Softhand.Models;
 
-public class MyBuddy : Buddy
+public class SoftBuddy : Buddy
 {
     public BuddyConfig cfg { get; set; }
 
-    public MyBuddy(BuddyConfig config)
+    public SoftBuddy(BuddyConfig config)
     {
         cfg = config;
     }
@@ -51,6 +51,6 @@ public class MyBuddy : Buddy
 
     override public void onBuddyState()
     {
-        MyApp.observer.notifyBuddyState(this);
+        SoftApp.observer.notifyBuddyState(this);
     }
 }

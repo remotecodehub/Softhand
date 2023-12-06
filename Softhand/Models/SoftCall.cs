@@ -2,12 +2,12 @@
 
 namespace Softhand.Models
 {
-    public class MyCall : Call
+    public class SoftCall : Call
     {
         public VideoWindow vidWin;
         public VideoPreview vidPrev;
 
-        public MyCall(MyAccount acc, int call_id) : base(acc, call_id)
+        public SoftCall(SoftAccount acc, int call_id) : base(acc, call_id)
         {
             vidWin = null;
             vidPrev = null;
@@ -21,7 +21,7 @@ namespace Softhand.Models
                 if (ci.state ==
                     pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
                 {
-                    MyApp.ep.utilLogWrite(3, "MyCall", this.dump(true, ""));
+                    SoftApp.ep.utilLogWrite(3, "SoftCall", this.dump(true, ""));
                 }
             }
             catch (Exception ex)
@@ -32,7 +32,7 @@ namespace Softhand.Models
             // Should not delete this call instance (self) in this context,
             // so the observer should manage this call instance deletion
             // out of this callback context.
-            MyApp.observer.notifyCallState(this);
+            SoftApp.observer.notifyCallState(this);
         }
 
         override public void onCallMediaState(OnCallMediaStateParam prm)
@@ -61,7 +61,7 @@ namespace Softhand.Models
                     // connect ports
                     try
                     {
-                        AudDevManager audMgr = MyApp.ep.audDevManager();
+                        AudDevManager audMgr = SoftApp.ep.audDevManager();
                         AudioMedia am = getAudioMedia(i);
                         audMgr.getCaptureDevMedia().startTransmit(am);
                         am.startTransmit(audMgr.getPlaybackDevMedia());
@@ -82,7 +82,7 @@ namespace Softhand.Models
                 }
             }
 
-            MyApp.observer.notifyCallMediaState(this);
+            SoftApp.observer.notifyCallMediaState(this);
         }
     }
 }
