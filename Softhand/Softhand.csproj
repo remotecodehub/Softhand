@@ -15,7 +15,7 @@
 		<ApplicationTitle>Softhand</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.softhand</ApplicationId>
+		<ApplicationId>com.onboardcode.softhand</ApplicationId>
 		<ApplicationIdGuid>08a662cf-ea61-4c72-8392-a7eeb5f38d26</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -100,11 +100,13 @@
 	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo.java" />
 	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo2.java" />
 	  <None Remove="Platforms\Android\org\pjsip\PjCamera.java" />
+	  <None Remove="Platforms\iOS\pjsua2\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
 	  <Folder Include="Handlers\" />
 	  <Folder Include="Messages\" />
+	  <Folder Include="Platforms\iOS\pjsua2\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Fonts\fa-solid-900.ttf" />
