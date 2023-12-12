@@ -45,6 +45,9 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net7.0-android|AnyCPU'">
+	  <AndroidManifest>Platforms\Android\Resources\AndroidManifest.xml</AndroidManifest>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -74,7 +77,6 @@
 	  <None Remove="Resources\Fonts\fa-v4compatibility.ttf" />
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
-	  <None Remove="Handlers\" />
 	  <None Remove="Messages\" />
 	  <None Remove="Platforms\Android\lib\armeabi-v7a\libssl.so" />
 	  <None Remove="Platforms\Android\lib\armeabi-v7a\libopenh264.so" />
@@ -101,12 +103,15 @@
 	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo2.java" />
 	  <None Remove="Platforms\Android\org\pjsip\PjCamera.java" />
 	  <None Remove="Platforms\iOS\pjsua2\" />
+	  <None Remove="Platforms\Android\Resources\layout\" />
+	  <None Remove="Controls\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
-	  <Folder Include="Handlers\" />
 	  <Folder Include="Messages\" />
 	  <Folder Include="Platforms\iOS\pjsua2\" />
+	  <Folder Include="Platforms\Android\Resources\layout\" />
+	  <Folder Include="Controls\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Fonts\fa-solid-900.ttf" />
