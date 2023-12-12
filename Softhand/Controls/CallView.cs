@@ -1,5 +1,4 @@
-﻿using System;
-namespace Softhand.Controls;
+﻿namespace Softhand.Controls;
 
 public class CallView : ContentView
 {

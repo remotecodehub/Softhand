@@ -1,11 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Softhand.Controls;
-#if __ANDROID__
-using Softhand.Platforms.Android;
-#elif __IOS__
-using Softhand.Platforms.iOS;
-#endif
-namespace Softhand;
+﻿namespace Softhand;
 
 public static class MauiProgram
 {

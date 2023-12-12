@@ -2,8 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using CoreGraphics;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
-using Microsoft.Maui.Controls.Platform; 
-using Softhand.Controls; 
+using Microsoft.Maui.Controls.Platform;  
 using UIKit;
 
 namespace Softhand.Platforms.iOS;
@@ -29,7 +28,7 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
             if (lastCallInfo.state ==
                 pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
             {
-                Dispatcher.GetForCurrentThread().Dispatch(() => { CallPageHandler.callPage.Navigation.PopAsync(); });
+                Dispatcher.GetForCurrentThread().Dispatch(() => { callPage.Navigation.PopAsync(); });
             }
         });
 

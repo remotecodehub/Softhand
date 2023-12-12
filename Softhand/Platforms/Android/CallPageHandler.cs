@@ -1,14 +1,5 @@
 ﻿#if __ANDROID__
-using System.Runtime.InteropServices;
-using Android.App;
-using Android.Content;
-using Android.Graphics;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Microsoft.Maui.Controls.Handlers.Compatibility;
-using Microsoft.Maui.Controls.Platform;
-using Softhand.Controls; 
+
 
 namespace Softhand.Platforms.Android;
 
