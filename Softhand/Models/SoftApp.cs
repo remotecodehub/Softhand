@@ -53,7 +53,7 @@ public class SoftApp
         String configPath = appDir + "/" + configName;
         if (File.Exists(configPath))
         {
-            loadConfig(configPath);
+            Dispatcher.GetForCurrentThread().Dispatch(() => loadConfig(configPath));
         }
         else
         {

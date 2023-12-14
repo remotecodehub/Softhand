@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="Softhand.Views.CallPage">
+            x:Class="Softhand.Views.CallPage"
+             xmlns:c="clr-namespace:Softhand.Controls">
     <ContentPage.Content>
-        <ContentView>
-        </ContentView>
+        <c:CallView>
+            
 
-
+        </c:CallView>
     </ContentPage.Content>
 </ContentPage>
 

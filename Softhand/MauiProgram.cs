@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Softhand.Handlers;
-
-namespace Softhand;
+﻿namespace Softhand;
 
 public static class MauiProgram
 {
@@ -23,8 +20,17 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		CallPageHandler.Handle();
-		return builder.Build();
+#if __ANDROID__
+		builder.ConfigureMauiHandlers((x) => {
+			x.AddHandler(typeof(CallView), typeof(CallPageRenderer));
+		});
+#endif
+#if __IOS__
+		builder.ConfigureMauiHandlers((x) => {
+			x.AddHandler(typeof(CallView), typeof(CallPageRenderer));
+		});
+#endif
+        return builder.Build();
 	}
 }
 
