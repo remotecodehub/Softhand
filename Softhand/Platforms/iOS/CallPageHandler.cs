@@ -1,25 +1,24 @@
 ﻿#if __IOS__
 using CommunityToolkit.Mvvm.Messaging;
 using CoreGraphics;
-using pjsua2xamarin.pjsua2;
-using Softhand.Messages;
-using Softhand.Models;
-using Softhand.Views;
+using Microsoft.Maui.Controls.Handlers.Compatibility;
+using Microsoft.Maui.Controls.Platform;  
 using UIKit;
 
 namespace Softhand.Platforms.iOS;
 
 
-public partial class CallPageHandler
+public class CallPageRenderer : VisualElementRenderer<CallView>
 {
-    static UIView incomingVideoView;
-    static UIButton acceptCallButton;
-    static UIButton hangupCallButton;
-    static UILabel peerLabel;
-    static UILabel callStatusLabel;
+    UIView incomingVideoView;
+    UIButton acceptCallButton;
+    UIButton hangupCallButton;
+    UILabel peerLabel;
+    UILabel callStatusLabel;
     private static CallInfo lastCallInfo;
-    static CallPage callPage;
-    public CallPageHandler()
+    private CallPage callPage;
+
+    public CallPageRenderer()
     {
         WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
         {
@@ -29,7 +28,7 @@ public partial class CallPageHandler
             if (lastCallInfo.state ==
                 pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
             {
-                Dispatcher.GetForCurrentThread().Dispatch(() => { CallPageHandler.callPage.Navigation.PopAsync(); });
+                Dispatcher.GetForCurrentThread().Dispatch(() => { callPage.Navigation.PopAsync(); });
             }
         });
 
@@ -44,90 +43,123 @@ public partial class CallPageHandler
         });
     }
 
-    public static void PageHandle()
+    protected override void OnElementChanged(ElementChangedEventArgs<CallView> e)
     {
-        Microsoft.Maui.Handlers.ContentViewHandler.ViewCommandMapper["SoftCustomization"] = (handler, view, sender) =>
+        base.OnElementChanged(e);
+
+        if (e.OldElement != null || Element == null)
         {
-            var page = (UIView)handler.PlatformView;
-            CallPageHandler.callPage = (CallPage)handler.VirtualView;
-            page.BeginInvokeOnMainThread(() => {
-                var controlWidth = 150;
-                var controlHeight = 50;
-                var centerButtonX = (handler.VirtualView.Width/2) - 35f;
-                var topLeftX = handler.VirtualView.Width + 25;
-                var topRightX = handler.VirtualView.Margin.Right - controlWidth - 25;
-                var bottomButtonY = handler.VirtualView.Margin.Bottom - 150;
-                var bottomLabelY = handler.VirtualView.Margin.Top + 15;
+            return;
+        }
 
-                CallPageHandler.incomingVideoView = new UIView()
+        callPage = (CallPage)Element.Parent;
+        try
+        {
+            var controlWidth = 150;
+            var controlHeight = 50;
+            var centerButtonX = (Element.Bounds.X / 2) - 35f;
+            var topLeftX = Element.Bounds.X + 25;
+            var topRightX = Element.Bounds.Right - controlWidth - 25;
+            var bottomButtonY = Element.Bounds.Bottom - 150;
+            var bottomLabelY = Element.Bounds.Top + 15;
+
+            incomingVideoView = new UIView()
+            {
+                Frame = new CGRect(0f, 0f, Element.Bounds.Width,
+                                   Element.Bounds.Height)
+            };
+
+            acceptCallButton = new UIButton()
+            {
+                Frame = new CGRect(topLeftX, bottomButtonY, controlWidth,
+                                   controlHeight)
+            };
+            acceptCallButton.SetTitle("Accept", UIControlState.Normal);
+            acceptCallButton.SetTitleColor(color: UIColor.Black,
+                                           UIControlState.Normal);
+            acceptCallButton.BackgroundColor = UIColor.White;
+
+            hangupCallButton = new UIButton()
+            {
+                Frame = new CGRect(topRightX, bottomButtonY, controlWidth,
+                                   controlHeight)
+            };
+            hangupCallButton.SetTitle("Hangup", UIControlState.Normal);
+            hangupCallButton.SetTitleColor(color: UIColor.Black,
+                                           UIControlState.Normal);
+            hangupCallButton.BackgroundColor = UIColor.White;
+
+            peerLabel = new UILabel
+            {
+                TextAlignment = UITextAlignment.Center,
+                Frame = new CGRect(Element.Bounds.X,
+                                                       bottomLabelY,
+                                                       Element.Bounds.Right,
+                                                       controlHeight)
+            };
+            callStatusLabel = new UILabel
+            {
+                TextAlignment = UITextAlignment.Center,
+                Frame = new CGRect(Element.Bounds.X,
+                                                  bottomLabelY + controlHeight,
+                                                  Element.Bounds.Right,
+                                                  controlHeight)
+            };
+
+            this.Add(incomingVideoView);
+            this.Add(acceptCallButton);
+            this.Add(hangupCallButton);
+            this.Add(peerLabel);
+            this.Add(callStatusLabel);
+
+
+            SetupEventHandlers();
+
+            if (SoftApp.currentCall != null)
+            {
+                try
                 {
-                    Frame = new CGRect(0f, 0f, handler.VirtualView.Width,
-                                       handler.VirtualView.Height)
-                };
-
-                acceptCallButton = new UIButton()
+                    lastCallInfo = SoftApp.currentCall.getInfo();
+                }
+                catch (Exception ex)
                 {
-                    Frame = new CGRect(topLeftX, bottomButtonY, controlWidth,
-                                       controlHeight)
-                };
-                acceptCallButton.SetTitle("Accept", UIControlState.Normal);
-                acceptCallButton.SetTitleColor(color: UIColor.Black,
-                                               UIControlState.Normal);
-                acceptCallButton.BackgroundColor = UIColor.White;
+                    System.Diagnostics.Debug.WriteLine(@"ERROR: ",
+                                                       ex.Message);
+                }
+                Device.BeginInvokeOnMainThread(() => {
+                    updateCallState(lastCallInfo);
+                });
+            }
+            else
+            {
+                incomingVideoView.Hidden = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"ERROR: {ex.Message}");
+        }
+    }
+     
 
-                hangupCallButton = new UIButton()
-                {
-                    Frame = new CGRect(topRightX, bottomButtonY, controlWidth,
-                                       controlHeight)
-                };
-                hangupCallButton.SetTitle("Hangup", UIControlState.Normal);
-                hangupCallButton.SetTitleColor(color: UIColor.Black,
-                                               UIControlState.Normal);
-                hangupCallButton.BackgroundColor = UIColor.White;
+    protected override void Dispose(bool disposing)
+    {
+        updateVideoWindow(false);
+        base.Dispose(disposing);
+    }
 
-                peerLabel = new UILabel
-                {
-                    TextAlignment = UITextAlignment.Center,
-                    Frame = new CGRect(handler.VirtualView.Width,
-                                                           bottomLabelY,
-                                                           handler.VirtualView.Margin.Right,
-                                                           controlHeight)
-                };
-                callStatusLabel = new UILabel
-                {
-                    TextAlignment = UITextAlignment.Center,
-                    Frame = new CGRect(handler.VirtualView.Width,
-                                                      bottomLabelY + controlHeight,
-                                                      handler.VirtualView.Margin.Right,
-                                                      controlHeight)
-                };
+    void SetupEventHandlers()
+    {
+        acceptCallButton.TouchUpInside += (object sender, EventArgs e) => {
+            AcceptCall();
+        };
 
-                page.Add(incomingVideoView);
-                page.Add(acceptCallButton);
-                page.Add(hangupCallButton);
-                page.Add(peerLabel);
-                page.Add(callStatusLabel);
-
-                acceptCallButton.TouchUpInside += (object sender, EventArgs e) => {
-                    CallPageHandler.AcceptCall();
-                };
-
-                hangupCallButton.TouchUpInside += (object sender, EventArgs e) => {
-                    CallPageHandler.HangupCall();
-                };
-            }); 
+        hangupCallButton.TouchUpInside += (object sender, EventArgs e) => {
+            HangupCall();
         };
     }
 
-
-    ~CallPageHandler()
-    {
-        updateVideoWindow(false);
-    }
-
-   
-
-    static void AcceptCall()
+    void AcceptCall()
     {
         CallOpParam prm = new CallOpParam();
         prm.statusCode = pjsip_status_code.PJSIP_SC_OK;
@@ -143,7 +175,7 @@ public partial class CallPageHandler
         acceptCallButton.Hidden = true;
     }
 
-    static void HangupCall()
+    void HangupCall()
     {
         if (SoftApp.currentCall != null)
         {
@@ -231,7 +263,7 @@ public partial class CallPageHandler
                            (UIView)ObjCRuntime.Runtime.GetNSObject(winPtr);
                 try
                 {
-                    incomingVideoView.BeginInvokeOnMainThread(() => {
+                    this.BeginInvokeOnMainThread(() => {
                         incomingVideoView.AddSubview(inView);
                         inView.ContentMode = UIViewContentMode.ScaleAspectFit;
                         inView.Center = incomingVideoView.Center;
