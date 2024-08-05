@@ -6,7 +6,7 @@ global using Microsoft.Maui.Controls.Handlers.Compatibility;
 global using Microsoft.Maui.Controls.Platform; 
 
 
-global using pjsua2xamarin.pjsua2;
+global using pjsua2maui.pjsua2;
 
 global using Softhand.Messages;
 global using Softhand.Models;

@@ -54,40 +54,6 @@ jobs:
           name: softhand-android-ci-build
           path: Softhand/bin/Release/net7.0-android/*Signed.a*
 
-# MAUI Windows Build
-  build-windows:
-    runs-on: windows-2022
-    name: Windows Build
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
-
-      - name: Setup .NET 7
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: |
-            7.0.x
-      - name: Install MAUI Workload
-        run: dotnet workload install maui --ignore-failed-sources
-
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'microsoft'
-          java-version: '11'
-
-      - name: Restore Dependencies
-        run: dotnet restore Softhand/Softhand.csproj
-
-      - name: Build MAUI Windows
-        run: dotnet publish Softhand/Softhand.csproj -c Release -f net7.0-windows10.0.19041.0 --no-restore
-
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: softhand-windows-ci-build
-          path: Softhand/bin/Release/net7.0-windows10.0.19041.0/win10-x64/AppPackages/Softhand*/Softhand*.msix
-
 # MAUI iOS Build
   build-ios:
     runs-on: macos-13
@@ -97,7 +63,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14.3.1'
+          xcode-version: '15.2'
 
 
       - name: Checkout
@@ -127,42 +93,3 @@ jobs:
         with:
           name: softhand-ios-ci-build
           path: Softhand/bin/Release/net7.0-ios/iossimulator-x64/**/*.app
-
-# MAUI MacCatalyst Build
-  build-mac:
-    runs-on: macos-13
-    name: MacCatalyst Build
-    steps:
-      - name: Setup Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '14.3.1'
-    
-      - name: Checkout
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
-
-      - name: Setup .NET 7
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: |
-            7.0.x
-
-      - name: Install MAUI Workload
-        run: dotnet workload install maui --ignore-failed-sources
-
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'microsoft'
-          java-version: '11'
-
-      - name: Restore Dependencies
-        run: dotnet restore Softhand/Softhand.csproj
-
-      - name: Build MAUI MacCatalyst
-        run: dotnet publish Softhand/Softhand.csproj -c Release -f net7.0-maccatalyst --no-restore -p:BuildIpa=True
-
-      - name: Upload MacCatalyst Artifact
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: softhand-macos-ci-build
-          path: Softhand/bin/Release/net7.0-maccatalyst/maccatalyst-x64/publish/*.pkg

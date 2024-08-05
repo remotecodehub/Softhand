@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
@@ -34,13 +33,11 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	  <TargetPlatformIdentifiers>ios-x64;iossimulator-x64</TargetPlatformIdentifiers>
-	  <MtouchExtraArgs>-cxx -gcc_flags "-L./Platforms/iOS/lib/fat -lpjsua2 -force_load ./Platforms/iOS/lib/fat/libpjsua2.a" </MtouchExtraArgs>
-	  <CodesignProvision>iOS Team Provisioning Profile: com.onboardcode.softhand</CodesignProvision>
-	  <CodesignKey>iPhone Developer</CodesignKey>
+	  <CodesignProvision></CodesignProvision>
+	  <CodesignKey>Apple Development: weslleysgl@gmail.com (2SH2Q27TVY)</CodesignKey>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	  <MtouchExtraArgs>-cxx -gcc_flags "-L./Platforms/iOS/lib/fat -lpjsua2 -force_load ./Platforms/iOS/lib/fat/libpjsua2.a" </MtouchExtraArgs>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>
@@ -69,6 +66,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="libpjsua2.maui" Version="2.14.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -78,38 +76,12 @@
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
 	  <None Remove="Messages\" />
-	  <None Remove="Platforms\Android\lib\armeabi-v7a\libssl.so" />
-	  <None Remove="Platforms\Android\lib\armeabi-v7a\libopenh264.so" />
-	  <None Remove="Platforms\Android\lib\armeabi-v7a\libcrypto.so" />
-	  <None Remove="Platforms\Android\lib\armeabi-v7a\libc++_shared.so" />
-	  <None Remove="Platforms\Android\lib\armeabi-v7a\libpjsua2.so" />
-	  <None Remove="Platforms\Android\lib\x86\libssl.so" />
-	  <None Remove="Platforms\Android\lib\x86\libopenh264.so" />
-	  <None Remove="Platforms\Android\lib\x86\libcrypto.so" />
-	  <None Remove="Platforms\Android\lib\x86\libc++_shared.so" />
-	  <None Remove="Platforms\Android\lib\x86\libpjsua2.so" />
-	  <None Remove="Platforms\Android\lib\arm64-v8a\libssl.so" />
-	  <None Remove="Platforms\Android\lib\arm64-v8a\libopenh264.so" />
-	  <None Remove="Platforms\Android\lib\arm64-v8a\libcrypto.so" />
-	  <None Remove="Platforms\Android\lib\arm64-v8a\libc++_shared.so" />
-	  <None Remove="Platforms\Android\lib\arm64-v8a\libpjsua2.so" />
-	  <None Remove="Platforms\Android\lib\x86_64\libssl.so" />
-	  <None Remove="Platforms\Android\lib\x86_64\libopenh264.so" />
-	  <None Remove="Platforms\Android\lib\x86_64\libcrypto.so" />
-	  <None Remove="Platforms\Android\lib\x86_64\libc++_shared.so" />
-	  <None Remove="Platforms\Android\lib\x86_64\libpjsua2.so" />
-	  <None Remove="Platforms\Android\org\pjsip\PjCamera2.java" />
-	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo.java" />
-	  <None Remove="Platforms\Android\org\pjsip\PjCameraInfo2.java" />
-	  <None Remove="Platforms\Android\org\pjsip\PjCamera.java" />
-	  <None Remove="Platforms\iOS\pjsua2\" />
 	  <None Remove="Platforms\Android\Resources\layout\" />
 	  <None Remove="Controls\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
 	  <Folder Include="Messages\" />
-	  <Folder Include="Platforms\iOS\pjsua2\" />
 	  <Folder Include="Platforms\Android\Resources\layout\" />
 	  <Folder Include="Controls\" />
 	</ItemGroup>
@@ -118,81 +90,5 @@
 	  <BundleResource Include="Resources\Fonts\fa-v4compatibility.ttf" />
 	  <BundleResource Include="Resources\Fonts\fa-regular-400.ttf" />
 	  <BundleResource Include="Resources\Fonts\fa-brands-400.ttf" />
-	</ItemGroup>
-	<ItemGroup>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libssl.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libopenh264.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libcrypto.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libc++_shared.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\armeabi-v7a\libpjsua2.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libssl.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libopenh264.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libcrypto.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libc++_shared.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86\libpjsua2.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libssl.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libopenh264.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libcrypto.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libc++_shared.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\libpjsua2.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libssl.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libopenh264.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libcrypto.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libc++_shared.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	  <AndroidNativeLibrary Include="Platforms\Android\lib\x86_64\libpjsua2.so">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidNativeLibrary>
-	</ItemGroup>
-	<ItemGroup>
-	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCamera2.java">
-	    <Bind></Bind>
-	  </AndroidJavaSource>
-	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCameraInfo.java">
-	    <Bind></Bind>
-	  </AndroidJavaSource>
-	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCameraInfo2.java">
-	    <Bind></Bind>
-	  </AndroidJavaSource>
-	  <AndroidJavaSource Include="Platforms\Android\org\pjsip\PjCamera.java">
-	    <Bind></Bind>
-	  </AndroidJavaSource>
 	</ItemGroup>
 </Project>
