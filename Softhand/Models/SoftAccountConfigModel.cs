@@ -1,4 +1,4 @@
-﻿using pjsua2xamarin.pjsua2;
+﻿using pjsua2maui.pjsua2;
 
 namespace Softhand.Models
 {
