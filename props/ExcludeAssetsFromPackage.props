@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <PackageReference Update="libpjsua2maui">
-      <ExcludeAssets>native</ExcludeAssets>
-    </PackageReference>
-  </ItemGroup>
-</Project>
