@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
-    <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-    <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
     <OutputType>Exe</OutputType>
     <RootNamespace>Softhand</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -14,15 +12,11 @@
     <ApplicationId>com.remotecodehub.softhand</ApplicationId>
     <ApplicationIdGuid>08a662cf-ea61-4c72-8392-a7eeb5f38d26</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-    <ApplicationVersion>1</ApplicationVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.5</SupportedOSPlatformVersion>
+	<Version>0.0.1</Version>
+    <ApplicationDisplayVersion>0.0.1</ApplicationDisplayVersion>
+    <ApplicationVersion>001</ApplicationVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-    <!--<BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>-->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
@@ -39,6 +33,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net9.0-android|AnyCPU'">
     <AndroidManifest>Platforms\Android\Resources\AndroidManifest.xml</AndroidManifest>
+    <TargetFrameworkVersion>35</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
@@ -59,28 +54,18 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Views\" />
-    <None Remove="Resources\Fonts\fa-solid-900.ttf" />
-    <None Remove="Resources\Fonts\fa-v4compatibility.ttf" />
-    <None Remove="Resources\Fonts\fa-regular-400.ttf" />
-    <None Remove="Resources\Fonts\fa-brands-400.ttf" />
-    <None Remove="Messages\" />
-    <None Remove="Platforms\Android\Resources\layout\" />
-    <None Remove="Controls\" />
-  </ItemGroup>
+    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.12.1" />
+    <PackageReference Include="UraniumUI.Material" Version="2.12.1" />
+  </ItemGroup>  
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="Messages\" />
     <Folder Include="Platforms\Android\Resources\layout\" />
     <Folder Include="Controls\" />
-  </ItemGroup>
+  </ItemGroup> 
   <ItemGroup>
-    <BundleResource Include="Resources\Fonts\fa-solid-900.ttf" />
-    <BundleResource Include="Resources\Fonts\fa-v4compatibility.ttf" />
-    <BundleResource Include="Resources\Fonts\fa-regular-400.ttf" />
-    <BundleResource Include="Resources\Fonts\fa-brands-400.ttf" />
+    <ProjectReference Include="..\Application\Softhand.Application.csproj" />
+    <ProjectReference Include="..\Composition\Softhand.Composition.csproj" />
   </ItemGroup>
    
 </Project>

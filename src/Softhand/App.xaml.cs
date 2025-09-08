@@ -1,8 +1,7 @@
-﻿using Application = Microsoft.Maui.Controls.Application;
-using Window = Microsoft.Maui.Controls.Window;
+﻿using Window = Microsoft.Maui.Controls.Window;
 namespace Softhand;
 
-public partial class App : Application
+public partial class App : Microsoft.Maui.Controls.Application
 {
 	public App()
 	{
