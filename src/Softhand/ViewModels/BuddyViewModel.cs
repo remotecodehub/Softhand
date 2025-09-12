@@ -1,39 +1,48 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Softhand.Models;
 
 namespace Softhand.ViewModels;
 
-public class BuddyViewModel : BaseViewModel
+public partial class BuddyViewModel : BaseViewModel
 {
-    private SoftBuddy _selectedBuddy;
-    public SoftBuddy SelectedBuddy {
-        get { return _selectedBuddy; }
-        set { SetProperty(ref _selectedBuddy, value); }
-    }
-    public ObservableCollection<SoftBuddy> Buddies { get; set; }
-    public Command LoadBuddiesCommand { get; set; }
+    private readonly ILogger<BuddyViewModel> _logger;
+
+    [ObservableProperty]
+    private SoftBuddy selectedBuddy = default!;
+
+    [ObservableProperty]
+    private ObservableCollection<SoftBuddy> buddies = [];
 
     public BuddyViewModel()
     {
-        Buddies = new ObservableCollection<SoftBuddy>();
-        LoadBuddiesCommand = new Command(() => ExecuteLoadBuddiesCommand());
+        _logger = Microsoft.Maui.Controls.Application.Current.Handler.GetRequiredService<ILogger<BuddyViewModel>>();
     }
 
-    void ExecuteLoadBuddiesCommand()
+    [RelayCommand]
+    private void LoadBuddies()
     {
         if (IsBusy)
             return;
 
         IsBusy = true;
 
-        try {
+        try
+        {
             Buddies.Clear();
-            foreach (var buddy in SoftApp.account.BuddyList) {
+            foreach (var buddy in SoftApp.account.BuddyList)
+            {
                 Buddies.Add(buddy);
             }
-        } catch (Exception e) {
-            Console.WriteLine(e.Message);
-        } finally {
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "{Message}", e.Message);
+        }
+        finally
+        {
             IsBusy = false;
         }
     }
