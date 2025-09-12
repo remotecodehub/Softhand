@@ -22,7 +22,7 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
     {
         WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
         {
-            lastCallInfo = m.Value as CallInfo;
+            lastCallInfo = m.Value;
             Dispatcher.GetForCurrentThread().Dispatch(() => updateCallState(lastCallInfo));
 
             if (lastCallInfo.state ==
@@ -34,7 +34,7 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
 
         WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
         {
-            lastCallInfo = m.Value as CallInfo;
+            lastCallInfo = m.Value;
 
             if (SoftApp.currentCall.vidWin != null)
             {
@@ -126,9 +126,10 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
                     System.Diagnostics.Debug.WriteLine(@"ERROR: ",
                                                        ex.Message);
                 }
-                Device.BeginInvokeOnMainThread(() => {
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
                     updateCallState(lastCallInfo);
-                });
+                }).Wait();
             }
             else
             {
