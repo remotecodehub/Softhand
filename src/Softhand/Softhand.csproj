@@ -18,15 +18,23 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+  <PropertyGroup Condition="'$(TargetFramework)|$(RuntimeIdentifier)'=='net9.0-ios|iossimulator-x64'">
     <CreatePackage>false</CreatePackage>
-    <TargetPlatformIdentifiers>ios-x64;iossimulator-x64</TargetPlatformIdentifiers>
+    <TargetPlatformIdentifiers>iossimulator-x64</TargetPlatformIdentifiers>
     <CodesignProvision>
     </CodesignProvision>
     <CodesignKey>Apple Development: weslleysgl@gmail.com (2SH2Q27TVY)</CodesignKey>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)|$(RuntimeIdentifier)'=='net9.0-ios|ios-arm64'">
+	<CreatePackage>false</CreatePackage>
+	<TargetPlatformIdentifiers>ios-arm64</TargetPlatformIdentifiers>
+	<CodesignProvision>
+	</CodesignProvision>
+	<CodesignKey>Apple Development: weslleysgl@gmail.com (2SH2Q27TVY)</CodesignKey>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
+    <AdditionalArgs></AdditionalArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -49,7 +57,8 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="libpjsua2maui" Version="2.15.1" />
+    <PackageReference Include="libpjsua2maui" Version="2.15.1.1" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
@@ -62,10 +71,6 @@
     <Folder Include="Messages\" />
     <Folder Include="Platforms\Android\Resources\layout\" />
     <Folder Include="Controls\" />
-  </ItemGroup> 
-  <ItemGroup>
-    <ProjectReference Include="..\Application\Softhand.Application.csproj" />
-    <ProjectReference Include="..\Composition\Softhand.Composition.csproj" />
   </ItemGroup>
    
 </Project>
