@@ -21,11 +21,11 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>11.0</string>
+	<string>12.2</string>
 	<key>CFBundleDisplayName</key>
 	<string>Softhand</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.onboardcode.softhand</string>
+	<string>com.remotecodehub.softhand</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleName</key>
