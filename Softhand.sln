@@ -1,24 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softhand", "src\Softhand\Softhand.csproj", "{FDB0FB1C-3216-47B7-85EC-CA3067427BAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softhand.Application", "src\Application\Softhand.Application.csproj", "{8B74BC42-B857-448C-BB4C-3F3E2906F68B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softhand.Composition", "src\Composition\Softhand.Composition.csproj", "{694C4BB4-D71F-483B-9593-5C22015A98A9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softhand.Domain", "src\Domain\Softhand.Domain.csproj", "{EA41294F-F283-4A20-ACBB-6FCECD5840D5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softhand.Infrastructure", "src\Infrastructure\Softhand.Infrastructure.csproj", "{40021B66-72D7-4D2C-B1D8-A940495CCEA6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{EFD7795C-014C-4440-981D-3B327E58BECB}"
-	ProjectSection(SolutionItems) = preProject
-		props\ExcludeAssetsFromPackage.props = props\ExcludeAssetsFromPackage.props
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,32 +18,12 @@ Global
 		{FDB0FB1C-3216-47B7-85EC-CA3067427BAF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{FDB0FB1C-3216-47B7-85EC-CA3067427BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDB0FB1C-3216-47B7-85EC-CA3067427BAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B74BC42-B857-448C-BB4C-3F3E2906F68B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B74BC42-B857-448C-BB4C-3F3E2906F68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B74BC42-B857-448C-BB4C-3F3E2906F68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B74BC42-B857-448C-BB4C-3F3E2906F68B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{694C4BB4-D71F-483B-9593-5C22015A98A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{694C4BB4-D71F-483B-9593-5C22015A98A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{694C4BB4-D71F-483B-9593-5C22015A98A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{694C4BB4-D71F-483B-9593-5C22015A98A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA41294F-F283-4A20-ACBB-6FCECD5840D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA41294F-F283-4A20-ACBB-6FCECD5840D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA41294F-F283-4A20-ACBB-6FCECD5840D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA41294F-F283-4A20-ACBB-6FCECD5840D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40021B66-72D7-4D2C-B1D8-A940495CCEA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40021B66-72D7-4D2C-B1D8-A940495CCEA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40021B66-72D7-4D2C-B1D8-A940495CCEA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40021B66-72D7-4D2C-B1D8-A940495CCEA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FDB0FB1C-3216-47B7-85EC-CA3067427BAF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{8B74BC42-B857-448C-BB4C-3F3E2906F68B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{694C4BB4-D71F-483B-9593-5C22015A98A9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{EA41294F-F283-4A20-ACBB-6FCECD5840D5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{40021B66-72D7-4D2C-B1D8-A940495CCEA6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF9E3B9A-629D-4CB3-BBC8-4E8A5D403AA2}
