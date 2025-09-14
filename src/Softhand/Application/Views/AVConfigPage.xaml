@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Softhand.Application.Views.AVConfigPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Softhand.Application.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewModels:AVConfigViewModel">
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Fill">
+            <StackLayout Margin="10" VerticalOptions="Fill" />
+
+            <Grid HorizontalOptions="Fill" VerticalOptions="End">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding SaveCommand}"
+                    HorizontalOptions="Fill"
+                    Text="{Binding OkBtnTxt}" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding CancelCommand}"
+                    HorizontalOptions="Fill"
+                    Text="{Binding CancelBtnTxt}" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

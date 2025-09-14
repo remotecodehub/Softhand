@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Softhand.Application.Views.AccountConfigPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Softhand.Application.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewModels:AccountConfigViewModel">
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Fill">
+            <StackLayout
+                Margin="10"
+                x:DataType="viewModels:AccountConfigViewModel"
+                VerticalOptions="Fill">
+                <Label Text="Id:" />
+                <Entry HorizontalOptions="Fill" Text="{Binding AccountConfig.IdUri}" />
+                <Label Text="Registrar" />
+                <Entry HorizontalOptions="Fill" Text="{Binding AccountConfig.RegistrarUri}" />
+                <Label Text="Proxy" />
+                <Entry HorizontalOptions="Fill" Text="{Binding AccountConfig.Proxy}" />
+                <Label Text="Username" />
+                <Entry HorizontalOptions="Fill" Text="{Binding AccountConfig.Username}" />
+                <Label Text="Password" />
+                <Entry HorizontalOptions="Fill" Text="{Binding AccountConfig.Password}" />
+            </StackLayout>
+
+            <Grid HorizontalOptions="Fill" VerticalOptions="End">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding OkCommand}"
+                    HorizontalOptions="Fill"
+                    Text="Ok" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding CancelCommand}"
+                    HorizontalOptions="Fill"
+                    Text="Cancel" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
