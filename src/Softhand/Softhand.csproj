@@ -43,6 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
     <AdditionalArgs></AdditionalArgs>
+    <NoWarn>1701;1702;CA1416</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -50,6 +51,15 @@
   <PropertyGroup Condition="'$(TargetFramework)|$(Platform)'=='net9.0-android|AnyCPU'">
     <AndroidManifest>Platforms\Android\Resources\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>35</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
@@ -73,7 +83,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.*" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.*" />
 	<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.12.1" />
-	<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.12.1"  />
+	<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.12.1" />
     <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.12.1" />
     <PackageReference Include="UraniumUI.Icons.MaterialSymbols" Version="2.12.1" />
     <PackageReference Include="UraniumUI.Material" Version="2.12.1" />

@@ -3,6 +3,7 @@
     x:Class="Softhand.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Softhand.Infrastructure.Converters"
     xmlns:local="clr-namespace:Softhand"
     xmlns:m="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material">
     <Application.Resources>
@@ -12,6 +13,7 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <m:StyleResource />
             </ResourceDictionary.MergedDictionaries>
+            <converters:SipStatusColorConverter x:Key="SipStatusColorConverter" />
         </ResourceDictionary>
     </Application.Resources>
 

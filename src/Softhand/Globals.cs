@@ -7,7 +7,6 @@ global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls.Handlers.Compatibility;
 global using Microsoft.Maui.Controls.Platform; 
 
-
 global using pjsua2maui.pjsua2;
 
 global using Softhand.Application.Controls; 
@@ -21,11 +20,12 @@ global using Softhand.Infrastructure.Services.Concrete;
 
 global using System.Collections.ObjectModel;
 global using System.ComponentModel;
+global using System.Globalization;
 global using System.Runtime.CompilerServices;
+global using System.Runtime.InteropServices;
 
 #if __ANDROID__
 global using Softhand.Platforms.Android;
-global using System.Runtime.InteropServices;
 global using Android.App;
 global using Android.Content;
 global using Android.Graphics;

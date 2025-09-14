@@ -1,6 +1,11 @@
-﻿using UraniumUI; 
+﻿#if __ANDROID__
+using Android.Hardware.Camera2;
+using Java.Lang;
+using Microsoft.Maui.LifecycleEvents;
+#endif
 using CommunityToolkit.Maui;
 using Mopups.Hosting;
+using UraniumUI;
 namespace Softhand;
 
 public static class MauiProgramExtensions
@@ -27,9 +32,9 @@ public static class MauiProgramExtensions
     }
     public static MauiAppBuilder AddHandlers(this MauiAppBuilder builder)
     {
-        builder.ConfigureMauiHandlers((x) =>
+        builder.ConfigureMauiHandlers(handlerCollection =>
         {
-			x.AddHandler<CallPage, CallPageHandler>();
+			handlerCollection.AddHandler<CallPage, CallPageHandler>();
         });
         return builder;
     }
@@ -49,17 +54,18 @@ public static class MauiProgramExtensions
         builder.Services.AddSingleton<ISoftApp, SoftApp>();
         return builder;
     }
-    public static MauiApp CreateMauiApp(this MauiAppBuilder builder)
-    {
-        return builder
+
+#pragma warning disable CA1416
+    public static MauiApp CreateMauiApp(this MauiAppBuilder builder) => builder
         .UseMauiApp<App>()
         .ConfigureUI()
-        .AddLogging()
-        .AddHandlers()
         .UseMauiCommunityToolkit()
+        .AddLogging()
         .AddServices()
+        .AddHandlers()
         .AddViewsAndViewModels()
         .Build();
-    }
+#pragma warning restore CA1416
+
 }
  
