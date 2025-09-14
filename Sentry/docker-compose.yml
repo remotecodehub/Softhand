@@ -1,0 +1,83 @@
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: sentry
+      POSTGRES_PASSWORD: sentry
+      POSTGRES_DB: sentry
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    volumes:
+      - redis-data:/data
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.0.1
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  snuba-api:
+    image: getsentry/snuba:latest
+    depends_on:
+      - kafka
+      - redis
+      - postgres
+    environment:
+      SNUBA_SETTINGS: docker
+      CLICKHOUSE_HOST: clickhouse
+      DEFAULT_BROKERS: kafka:9092
+
+  clickhouse:
+    image: yandex/clickhouse-server:latest
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+
+  symbolicator:
+    image: getsentry/symbolicator:latest
+    environment:
+      RUST_BACKTRACE: 1
+
+  relay:
+    image: getsentry/relay:latest
+    depends_on:
+      - redis
+    environment:
+      RELAY_MODE: proxy
+
+  sentry:
+    image: sentry:latest
+    depends_on:
+      - postgres
+      - redis
+      - kafka
+      - snuba-api
+      - symbolicator
+      - relay
+    environment:
+      SENTRY_SECRET_KEY: "${SENTRY_SECRET_KEY}"
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_DB_NAME: sentry
+      SENTRY_DB_HOST: postgres
+      SENTRY_REDIS_HOST: redis
+    ports:
+      - "9000:9000"
+    command: ["sentry", "run", "web"]
+
+volumes:
+  postgres-data:
+  redis-data:
+  clickhouse-data:
