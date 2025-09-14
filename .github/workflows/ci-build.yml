@@ -91,7 +91,7 @@ jobs:
       - name: Build MAUI iOS
         run: |
           cd ${{ github.workspace }}/src/Softhand/
-          dotnet publish -c Release -f net9.0-ios -r iossimulator-arm64 -o ${{ env.OUTPUT_DIR }}/publish --no-restore /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
+          dotnet build -c Release -f net9.0-ios -r iossimulator-arm64 -o ${{ env.OUTPUT_DIR }}/publish --no-restore /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
         env:
           OUTPUT_DIR: ${{ github.workspace }}/publish
 
