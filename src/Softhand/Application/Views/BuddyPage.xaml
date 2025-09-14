@@ -29,18 +29,23 @@
                                             Light={x:StaticResource OnPrimary}}"
                 VerticalOptions="Center" />
 
+            <ImageButton
+                Grid.Column="1"
+                IsVisible="{Binding Registered}"
+                Source="{FontImageSource FontFamily='MaterialSharp',
+                                         Glyph={x:Static uranium:MaterialSharp.Signal_cellular_4_bar},
+                                         Color={AppThemeBinding Dark={x:StaticResource OnSipOnDark},
+                                                                Default={x:StaticResource OnSipOn},
+                                                                Light={x:StaticResource OnSipOn}}}" />
 
-            <Image Grid.Column="1">
-                <Image.Source>
-                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static uranium:MaterialSharp.Sip}">
-                        <FontImageSource.Color>
-                            <MultiBinding Converter="{StaticResource SipStatusColorConverter}">
-                                <Binding Path="Registered" />
-                            </MultiBinding>
-                        </FontImageSource.Color>
-                    </FontImageSource>
-                </Image.Source>
-            </Image>
+            <ImageButton
+                Grid.Column="1"
+                IsVisible="{Binding Unregistered}"
+                Source="{FontImageSource FontFamily='MaterialSharp',
+                                         Glyph={x:Static uranium:MaterialSharp.Signal_cellular_connected_no_internet_4_bar},
+                                         Color={AppThemeBinding Dark={x:StaticResource OnSipOffDark},
+                                                                Default={x:StaticResource OnSipOff},
+                                                                Light={x:StaticResource OnSipOff}}}" />
 
             <ImageButton
                 Grid.Column="2"
@@ -48,6 +53,7 @@
                 Source="{FontImageSource FontFamily='MaterialSharp',
                                          Glyph={x:Static uranium:MaterialSharp.Settings},
                                          Color={AppThemeBinding Dark={x:StaticResource OnPrimaryDark},
+                                                                Default={x:StaticResource OnPrimary},
                                                                 Light={x:StaticResource OnPrimary}}}" />
             <ImageButton
                 Grid.Column="3"
@@ -55,6 +61,7 @@
                 Source="{FontImageSource FontFamily='MaterialSharp',
                                          Glyph={x:Static uranium:MaterialSharp.Logout},
                                          Color={AppThemeBinding Dark={x:StaticResource OnPrimaryDark},
+                                                                Default={x:StaticResource OnPrimary},
                                                                 Light={x:StaticResource OnPrimary}}}" />
         </Grid>
 

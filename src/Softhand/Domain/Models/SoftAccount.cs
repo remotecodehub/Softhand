@@ -52,14 +52,14 @@ public class SoftAccount(AccountConfig config) : Account
         Console.WriteLine("***" + (ai.regIsActive ? "" : "Un") +
                           "Register: code=" + prm.code);
 
-        SoftApp.Monitor.notifyRegState((int)prm.code, prm.reason, prm.expiration);
+        SoftApp.Monitor.NotifyRegState((int)prm.code, prm.reason, prm.expiration);
     }
 
     override public void onIncomingCall(OnIncomingCallParam prm)
     {
         Console.WriteLine("======== Incoming call ======== ");
         SoftCall call = new SoftCall(this, prm.callId);
-        SoftApp.Monitor.notifyIncomingCall(call);
+        SoftApp.Monitor.NotifyIncomingCall(call);
     }
 
     override public void onInstantMessage(OnInstantMessageParam prm)

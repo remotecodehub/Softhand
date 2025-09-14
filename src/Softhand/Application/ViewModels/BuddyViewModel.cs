@@ -8,6 +8,9 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
      
     [ObservableProperty]
     private bool registered = false;
+     
+    [ObservableProperty]
+    private bool unregistered = true;
 
     [ObservableProperty]
     private string status = string.Empty;
@@ -111,12 +114,16 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
 
 
     #region MONITOR
-    public void notifyBuddyState(SoftBuddy buddy)
+    public void NotifyOnBuddyEvSubState(SoftBuddy buddy, OnBuddyEvSubStateParam param)
+    {
+        
+    }
+    public void NotifyBuddyState(SoftBuddy buddy)
     {
         
     }
 
-    public void notifyCallMediaState(SoftCall call)
+    public void NotifyCallMediaState(SoftCall call)
     {
         if (SoftApp.CurrentCall == null || call.getId() != SoftApp.CurrentCall.getId())
             return;
@@ -137,7 +144,7 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
         WeakReferenceMessenger.Default.Send(new UpdateMediaCallStateMessage(ci));
     }
 
-    public void notifyCallState(SoftCall call)
+    public void NotifyCallState(SoftCall call)
     {
         if (SoftApp.CurrentCall == null || call.getId() != SoftApp.CurrentCall.getId())
             return;
@@ -162,12 +169,12 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
         }
     }
 
-    public void notifyChangeNetwork()
+    public void NotifyChangeNetwork()
     { 
 
     }
 
-    public void notifyIncomingCall(SoftCall call)
+    public void NotifyIncomingCall(SoftCall call)
     {
         CallOpParam prm = new CallOpParam();
 
@@ -190,16 +197,17 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
         Dispatcher.GetForCurrentThread().Dispatch(async () => { await Shell.Current.GoToAsync(new ShellNavigationState(Routes.CallPage), true); });
     }
 
-    public void notifyRegState(int code, string reason, long expiration)
+    public void NotifyRegState(int code, string reason, long expiration)
     {
         Registered = (code == (int)pjsip_status_code.PJSIP_SC_OK);
+        Unregistered = (code != (int)pjsip_status_code.PJSIP_SC_OK);
         _logger.LogInformation("Registration Code: {Code}", code);
         _logger.LogInformation("Registration Reason: {Reason}", reason);
         _logger.LogInformation("Registration Expiration: {Expiration}", expiration);
 
     }
 
-    #endregion
+    #endregion 
 
     #region Commands
     [RelayCommand]
@@ -246,7 +254,7 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
 
             try
             {
-                await Dispatcher.GetForCurrentThread().DispatchAsync(() => call.makeCall(this.SelectedBuddy.cfg.uri, prm));
+                await Dispatcher.GetForCurrentThread().DispatchAsync(() => call.makeCall(this.SelectedBuddy.Configuration.uri, prm));
             }
             catch (Exception ex)
             {

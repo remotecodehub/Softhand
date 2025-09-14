@@ -26,7 +26,7 @@ namespace Softhand.Domain.Models
             // Should not delete this call instance (self) in this context,
             // so the Monitor should manage this call instance deletion
             // out of this callback context.
-            SoftApp.Monitor.notifyCallState(this);
+            SoftApp.Monitor.NotifyCallState(this);
         }
 
         public override void onCallMediaState(OnCallMediaStateParam prm)
@@ -75,7 +75,7 @@ namespace Softhand.Domain.Models
                 }
             }
 
-            SoftApp.Monitor.notifyCallMediaState(this);
+            SoftApp.Monitor.NotifyCallMediaState(this);
         }
     }
 }

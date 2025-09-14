@@ -20,27 +20,35 @@
                     <RowDefinition Height=".3*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <HorizontalStackLayout
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label
                     Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalOptions="Start"
+                    Text="Buddy Id"
+                    VerticalOptions="Center" />
+                <Entry
+                    Grid.Row="1"
+                    Grid.Column="1"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Center">
-                    <Label
-                        HorizontalOptions="Start"
-                        Text="Buddy Id"
-                        VerticalOptions="Center" />
-                    <Entry
-                        HorizontalOptions="Fill"
-                        Text="{Binding BuddyConfig.uri}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
-                <HorizontalStackLayout Grid.Row="3" VerticalOptions="Center">
-                    <Label HorizontalOptions="Start" Text="Subscribe" />
-                    <Switch HorizontalOptions="Start" IsToggled="{Binding BuddyConfig.subscribe}" />
-                </HorizontalStackLayout>
+                    Text="{Binding BuddyConfig.uri}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    HorizontalOptions="Start"
+                    Text="Subscribe" />
+                <Switch
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    IsToggled="{Binding BuddyConfig.subscribe}" />
             </Grid>
 
             <Grid HorizontalOptions="Fill" VerticalOptions="End">
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />

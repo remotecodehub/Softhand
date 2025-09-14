@@ -29,7 +29,7 @@ public partial class BuddyConfigViewModel : BaseViewModel
         }
         else
         {
-            this.InitCommand.Execute(_buddyContext.Payload.cfg);
+            this.InitCommand.Execute(_buddyContext.Payload.Configuration);
         }
     }
 
@@ -43,7 +43,7 @@ public partial class BuddyConfigViewModel : BaseViewModel
     [RelayCommand]
     private void OnAppearing()
     {
-        this.InitCommand.Execute(this._buddyContext.Payload.cfg);
+        this.InitCommand.Execute(this._buddyContext.Payload.Configuration);
     }
 
     [RelayCommand]

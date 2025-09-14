@@ -215,7 +215,7 @@ public class SoftApp(ILogger<SoftApp> _logger) : ISoftApp
         for (int j = 0; j < Account.BuddyList.Count; j++)
         {
             SoftBuddy bud = Account.BuddyList[j];
-            tmpAccCfg.BuddyConfigs.Add(bud.cfg);
+            tmpAccCfg.BuddyConfigs.Add(bud.Configuration);
         }
 
         CurrentConfig = tmpAccCfg;

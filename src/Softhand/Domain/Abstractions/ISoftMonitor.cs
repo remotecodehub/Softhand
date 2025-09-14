@@ -5,11 +5,12 @@ namespace Softhand.Domain.Abstractions;
 /* Interface to separate UI & engine a bit better */
 public interface ISoftMonitor
 {
-    void notifyRegState(int code, string reason, long expiration);
-    void notifyIncomingCall(SoftCall call);
-    void notifyCallState(SoftCall call);
-    void notifyCallMediaState(SoftCall call);
-    void notifyBuddyState(SoftBuddy buddy);
-    void notifyChangeNetwork();
+    void NotifyRegState(int code, string reason, long expiration);
+    void NotifyIncomingCall(SoftCall call);
+    void NotifyCallState(SoftCall call);
+    void NotifyCallMediaState(SoftCall call);
+    void NotifyBuddyState(SoftBuddy buddy);
+    void NotifyChangeNetwork();
+    void NotifyOnBuddyEvSubState(SoftBuddy buddy, OnBuddyEvSubStateParam param);
 }
 

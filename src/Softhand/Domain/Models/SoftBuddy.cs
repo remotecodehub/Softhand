@@ -2,16 +2,11 @@
 
 namespace Softhand.Domain.Models;
 
-public class SoftBuddy : Buddy
+public class SoftBuddy(BuddyConfig config) : Buddy
 {
-    public BuddyConfig cfg { get; set; }
+    public BuddyConfig Configuration { get; set; } = config;
 
-    public SoftBuddy(BuddyConfig config)
-    {
-        cfg = config;
-    }
-
-    public string getStatusText()
+    public string GetStatusText()
     {
         BuddyInfo bi;
 
@@ -48,9 +43,12 @@ public class SoftBuddy : Buddy
         }
         return status;
     }
-
+    public override void onBuddyEvSubState(OnBuddyEvSubStateParam prm)
+    {
+        SoftApp.Monitor.NotifyOnBuddyEvSubState(this, prm);
+    }
     override public void onBuddyState()
     {
-        SoftApp.Monitor.notifyBuddyState(this);
+        SoftApp.Monitor.NotifyBuddyState(this);
     }
 }
