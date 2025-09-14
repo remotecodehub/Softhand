@@ -1,161 +1,176 @@
 ﻿#if __IOS__
 using CommunityToolkit.Mvvm.Messaging;
 using CoreGraphics;
+using Microsoft.Maui;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
-using Microsoft.Maui.Controls.Platform;  
+using Microsoft.Maui.Controls.Platform;
+using Microsoft.Maui.Handlers;
+using Softhand.Application.Controls;
+using Softhand.Infrastructure.Messages;
+using System;
 using UIKit;
 
 namespace Softhand.Platforms.iOS;
 
-
-public class CallPageRenderer : VisualElementRenderer<CallView>
+public class CallPageHandler : ViewHandler<CallPage, UIView>
 {
     UIView incomingVideoView;
     UIButton acceptCallButton;
     UIButton hangupCallButton;
     UILabel peerLabel;
     UILabel callStatusLabel;
-    private static CallInfo lastCallInfo;
+    private static CallInfo lastCallInfo { get; set; } = new CallInfo();
     private CallPage callPage;
 
-    public CallPageRenderer()
+    public CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : base(mapper, commandMapper)
     {
-        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
-        {
-            lastCallInfo = m.Value;
-            Dispatcher.GetForCurrentThread().Dispatch(() => updateCallState(lastCallInfo));
-
-            if (lastCallInfo.state ==
-                pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
-            {
-                Dispatcher.GetForCurrentThread().Dispatch(() => { callPage.Navigation.PopAsync(); });
-            }
-        });
-
-        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
-        {
-            lastCallInfo = m.Value;
-
-            if (SoftApp.currentCall.vidWin != null)
-            {
-                incomingVideoView.Hidden = false;
-            }
-        });
+       
     }
 
-    protected override void OnElementChanged(ElementChangedEventArgs<CallView> e)
+    protected override UIView CreatePlatformView()
     {
-        base.OnElementChanged(e);
+        var rootView = new UIView();
 
-        if (e.OldElement != null || Element == null)
+        var controlWidth = 150;
+        var controlHeight = 50;
+        var centerButtonX = rootView.Bounds.GetMidX() - 35f;
+        var topLeftX = rootView.Bounds.X + 25;
+        var topRightX = rootView.Bounds.Right - controlWidth - 25;
+        var bottomButtonY = rootView.Bounds.Bottom - 150;
+        var bottomLabelY = rootView.Bounds.Top + 15;
+
+        incomingVideoView = new UIView()
         {
-            return;
-        }
+            Frame = new CGRect(0f, 0f, rootView.Bounds.Width,
+                               rootView.Bounds.Height)
+        };
 
-        callPage = (CallPage)Element.Parent;
-        try
+        acceptCallButton = new UIButton()
         {
-            var controlWidth = 150;
-            var controlHeight = 50;
-            var centerButtonX = (Element.Bounds.X / 2) - 35f;
-            var topLeftX = Element.Bounds.X + 25;
-            var topRightX = Element.Bounds.Right - controlWidth - 25;
-            var bottomButtonY = Element.Bounds.Bottom - 150;
-            var bottomLabelY = Element.Bounds.Top + 15;
+            Frame = new CGRect(topLeftX, bottomButtonY, controlWidth,
+                               controlHeight)
+        };
+        acceptCallButton.SetTitle("Accept", UIControlState.Normal);
+        acceptCallButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
+        acceptCallButton.BackgroundColor = UIColor.White;
 
-            incomingVideoView = new UIView()
+        hangupCallButton = new UIButton()
+        {
+            Frame = new CGRect(topRightX, bottomButtonY, controlWidth,
+                               controlHeight)
+        };
+        hangupCallButton.SetTitle("Hangup", UIControlState.Normal);
+        hangupCallButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
+        hangupCallButton.BackgroundColor = UIColor.White;
+
+        peerLabel = new UILabel
+        {
+            TextAlignment = UITextAlignment.Center,
+            Frame = new CGRect(rootView.Bounds.X,
+                               bottomLabelY,
+                               rootView.Bounds.Right,
+                               controlHeight)
+        };
+
+        callStatusLabel = new UILabel
+        {
+            TextAlignment = UITextAlignment.Center,
+            Frame = new CGRect(rootView.Bounds.X,
+                               bottomLabelY + controlHeight,
+                               rootView.Bounds.Right,
+                               controlHeight)
+        };
+
+        rootView.Add(incomingVideoView);
+        rootView.Add(acceptCallButton);
+        rootView.Add(hangupCallButton);
+        rootView.Add(peerLabel);
+        rootView.Add(callStatusLabel);
+
+        SetupEventHandlers();
+
+        return rootView;
+    }
+
+    protected override void ConnectHandler(UIView platformView)
+    {
+        base.ConnectHandler(platformView);
+
+        callPage = VirtualView;
+
+        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(
+            this,  (obj, message) =>
             {
-                Frame = new CGRect(0f, 0f, Element.Bounds.Width,
-                                   Element.Bounds.Height)
-            };
-
-            acceptCallButton = new UIButton()
-            {
-                Frame = new CGRect(topLeftX, bottomButtonY, controlWidth,
-                                   controlHeight)
-            };
-            acceptCallButton.SetTitle("Accept", UIControlState.Normal);
-            acceptCallButton.SetTitleColor(color: UIColor.Black,
-                                           UIControlState.Normal);
-            acceptCallButton.BackgroundColor = UIColor.White;
-
-            hangupCallButton = new UIButton()
-            {
-                Frame = new CGRect(topRightX, bottomButtonY, controlWidth,
-                                   controlHeight)
-            };
-            hangupCallButton.SetTitle("Hangup", UIControlState.Normal);
-            hangupCallButton.SetTitleColor(color: UIColor.Black,
-                                           UIControlState.Normal);
-            hangupCallButton.BackgroundColor = UIColor.White;
-
-            peerLabel = new UILabel
-            {
-                TextAlignment = UITextAlignment.Center,
-                Frame = new CGRect(Element.Bounds.X,
-                                                       bottomLabelY,
-                                                       Element.Bounds.Right,
-                                                       controlHeight)
-            };
-            callStatusLabel = new UILabel
-            {
-                TextAlignment = UITextAlignment.Center,
-                Frame = new CGRect(Element.Bounds.X,
-                                                  bottomLabelY + controlHeight,
-                                                  Element.Bounds.Right,
-                                                  controlHeight)
-            };
-
-            this.Add(incomingVideoView);
-            this.Add(acceptCallButton);
-            this.Add(hangupCallButton);
-            this.Add(peerLabel);
-            this.Add(callStatusLabel);
-
-
-            SetupEventHandlers();
-
-            if (SoftApp.currentCall != null)
-            {
-                try
+                SoftApp.LastCallInfo = message.Value;
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    lastCallInfo = SoftApp.currentCall.getInfo();
+                    UpdateCallState(lastCallInfo);
+                });
+
+                if (lastCallInfo.state ==
+                    pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        callPage?.Navigation.PopAsync();
+                    });
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(@"ERROR: ",
-                                                       ex.Message);
-                }
-                MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    updateCallState(lastCallInfo);
-                }).Wait();
-            }
-            else
+            });
+
+        WeakReferenceMessenger.Default.Register<UpdateMediaCallStateMessage>(
+            this, (obj, info) =>
             {
-                incomingVideoView.Hidden = true;
-            }
-        }
-        catch (Exception ex)
+                lastCallInfo = info.Value;
+
+                if (SoftApp.CurrentCall?.VudeoWindow != null)
+                {
+                    incomingVideoView.Hidden = false;
+                }
+            });
+
+        if (SoftApp.CurrentCall != null)
         {
-            System.Diagnostics.Debug.WriteLine($"ERROR: {ex.Message}");
+            try
+            {
+                lastCallInfo = SoftApp.CurrentCall.getInfo();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(@"ERROR: ", ex.Message);
+            }
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                UpdateCallState(lastCallInfo);
+            });
+        }
+        else
+        {
+            incomingVideoView.Hidden = true;
         }
     }
-     
 
-    protected override void Dispose(bool disposing)
+    protected override void DisconnectHandler(UIView platformView)
     {
-        updateVideoWindow(false);
-        base.Dispose(disposing);
+        UpdateVideoWindow(false);
+
+        WeakReferenceMessenger.Default.Unregister<UpdateCallStateMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<UpdateMediaCallStateMessage>(this);
+
+        base.DisconnectHandler(platformView);
     }
 
     void SetupEventHandlers()
     {
-        acceptCallButton.TouchUpInside += (object sender, EventArgs e) => {
+        acceptCallButton.TouchUpInside += (object sender, EventArgs e) =>
+        {
             AcceptCall();
         };
 
-        hangupCallButton.TouchUpInside += (object sender, EventArgs e) => {
+        hangupCallButton.TouchUpInside += (object sender, EventArgs e) =>
+        {
             HangupCall();
         };
     }
@@ -166,7 +181,7 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
         prm.statusCode = pjsip_status_code.PJSIP_SC_OK;
         try
         {
-            SoftApp.currentCall.answer(prm);
+            SoftApp.CurrentCall?.answer(prm);
         }
         catch (Exception ex)
         {
@@ -176,15 +191,15 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
         acceptCallButton.Hidden = true;
     }
 
-    void HangupCall()
+    private static void HangupCall()
     {
-        if (SoftApp.currentCall != null)
+        if (SoftApp.CurrentCall != null)
         {
             CallOpParam prm = new CallOpParam();
             prm.statusCode = pjsip_status_code.PJSIP_SC_DECLINE;
             try
             {
-                SoftApp.currentCall.hangup(prm);
+                SoftApp.CurrentCall.hangup(prm);
             }
             catch (Exception ex)
             {
@@ -193,9 +208,9 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
         }
     }
 
-    private void updateCallState(CallInfo ci)
+    private void UpdateCallState(CallInfo ci)
     {
-        String call_state = "";
+        string call_state = "";
 
         if (ci == null)
         {
@@ -210,13 +225,11 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
             acceptCallButton.Hidden = true;
         }
 
-        if (ci.state <
-            pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
+        if (ci.state < pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
         {
             if (ci.role == pjsip_role_e.PJSIP_ROLE_UAS)
             {
                 call_state = "Incoming call..";
-                /* Default button texts are already 'Accept' & 'Reject' */
             }
             else
             {
@@ -224,8 +237,7 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
                 call_state = ci.stateText;
             }
         }
-        else if (ci.state >=
-                   pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
+        else if (ci.state >= pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
         {
             acceptCallButton.Hidden = true;
             call_state = ci.stateText;
@@ -233,15 +245,14 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
             {
                 hangupCallButton.SetTitle("Hangup", UIControlState.Normal);
             }
-            else if (ci.state ==
-                       pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+            else if (ci.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
             {
                 hangupCallButton.SetTitle("OK", UIControlState.Normal);
                 call_state = "Call disconnected: " + ci.lastReason;
             }
             if (ci.state == pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
             {
-                updateVideoWindow(true);
+                UpdateVideoWindow(true);
             }
         }
 
@@ -249,35 +260,61 @@ public class CallPageRenderer : VisualElementRenderer<CallView>
         callStatusLabel.Text = call_state;
     }
 
-    private void updateVideoWindow(bool show)
+    private void UpdateVideoWindow(bool show)
     {
-        if (SoftApp.currentCall != null &&
-            SoftApp.currentCall.vidWin != null &&
-            SoftApp.currentCall.vidPrev != null)
+        if (SoftApp.CurrentCall != null &&
+            SoftApp.CurrentCall.VudeoWindow != null &&
+            SoftApp.CurrentCall.VideoPreview != null &&
+            show)
         {
-            if (show)
+            try
             {
-                VideoWindowInfo winInfo =
-                                    SoftApp.currentCall.vidWin.getInfo();
+                VideoWindowInfo winInfo = SoftApp.CurrentCall.VudeoWindow.getInfo();
+
+                if (winInfo?.winHandle?.handle == null ||
+                    winInfo.winHandle.handle.window == IntPtr.Zero)
+                {
+                    System.Diagnostics.Debug.WriteLine("UpdateVideoWindow skipped: invalid handle.");
+                    return;
+                }
+
                 IntPtr winPtr = winInfo.winHandle.handle.window;
-                UIView inView =
-                           (UIView)ObjCRuntime.Runtime.GetNSObject(winPtr);
-                try
+
+                if (ObjCRuntime.Runtime.GetNSObject(winPtr) is not UIView inView)
                 {
-                    this.BeginInvokeOnMainThread(() => {
-                        incomingVideoView.AddSubview(inView);
+                    System.Diagnostics.Debug.WriteLine("UpdateVideoWindow skipped: UIView not resolved.");
+                    return;
+                }
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    try
+                    { 
+                        if (inView.Superview != incomingVideoView)
+                        {
+                            incomingVideoView.AddSubview(inView);
+                        }
+
                         inView.ContentMode = UIViewContentMode.ScaleAspectFit;
-                        inView.Center = incomingVideoView.Center;
                         inView.Frame = incomingVideoView.Bounds;
-                    });
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(@"ERROR: ",
-                                                       ex.Message);
-                }
+                        inView.Center = incomingVideoView.Center;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("ERROR updating video view: " + ex.Message);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("ERROR in UpdateVideoWindow: " + ex.Message);
             }
         }
+        else
+        {
+            System.Diagnostics.Debug.WriteLine("UpdateVideoWindow skipped: CurrentCall or video handles are null.");
+        }
     }
+
 }
 #endif

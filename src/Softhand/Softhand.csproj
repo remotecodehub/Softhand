@@ -15,10 +15,18 @@
 	<Version>0.0.1</Version>
     <ApplicationDisplayVersion>0.0.1</ApplicationDisplayVersion>
     <ApplicationVersion>001</ApplicationVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+	<TargetPlatformMinVersion>21</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)|$(RuntimeIdentifier)'=='net9.0-ios|iossimulator-x64'">
+    <CreatePackage>false</CreatePackage>
+    <TargetPlatformIdentifiers>iossimulator-x64</TargetPlatformIdentifiers>
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignKey>Apple Development: weslleysgl@gmail.com (2SH2Q27TVY)</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)|$(RuntimeIdentifier)'=='net9.0-ios|iossimulator-arm64'">
     <CreatePackage>false</CreatePackage>
     <TargetPlatformIdentifiers>iossimulator-x64</TargetPlatformIdentifiers>
     <CodesignProvision>
@@ -57,20 +65,36 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="libpjsua2maui" Version="2.15.1.1" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+    <PackageReference Include="libpjsua2maui" Version="2.15.1.2" />
     <PackageReference Include="MediatR" Version="12.5.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.*" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.*" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.*" />
+	<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.12.1" />
+	<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.12.1"  />
     <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.12.1" />
+    <PackageReference Include="UraniumUI.Icons.MaterialSymbols" Version="2.12.1" />
     <PackageReference Include="UraniumUI.Material" Version="2.12.1" />
   </ItemGroup>  
   <ItemGroup>
-    <Folder Include="Views\" />
-    <Folder Include="Messages\" />
+    <Folder Include="Application\Views\" />
     <Folder Include="Platforms\Android\Resources\layout\" />
-    <Folder Include="Controls\" />
+    <Folder Include="Application\Controls\" />
+  </ItemGroup>  
+  <ItemGroup>
+    <Compile Update="Resources\Strings\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>  
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
    
 </Project>

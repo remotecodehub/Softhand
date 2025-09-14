@@ -1,133 +1,146 @@
 ﻿#if __ANDROID__
 
-using pjsua2maui.pjsua2;
+using Android.App;
+using Android.Content;
+using Android.Graphics;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using CommunityToolkit.Mvvm.Messaging;
+using Java.Interop;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Handlers;
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
 namespace Softhand.Platforms.Android;
 
-public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolderCallback
+public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : ViewHandler<CallPage, ViewGroup>(mapper, commandMapper) 
 {
     global::Android.Widget.Button acceptCallButton;
     global::Android.Widget.Button hangupCallButton;
     global::Android.Widget.TextView peerTxt;
     global::Android.Widget.TextView statusTxt;
-    global::Android.Views.View view;
-    private static CallInfo lastCallInfo;
+    private static CallInfo lastCallInfo { get; set; } = new CallInfo();
     private CallPage callPage;
-    SurfaceView incomingView;
+    SurfaceView incomingView; 
+    private SurfaceCallback surfaceCallback; 
+
+     
 
     [DllImport("android")]
     private static extern IntPtr ANativeWindow_fromSurface(IntPtr jni, IntPtr surface);
 
-    public CallPageRenderer(Context context) : base(context)
+    protected override ViewGroup CreatePlatformView()
     {
-        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
-        {
-            lastCallInfo = m.Value as CallInfo;
-            Dispatcher.GetForCurrentThread().Dispatch(() => updateCallState(lastCallInfo));
+        var activity = Context as Activity;
+        var root = new FrameLayout(Context);
 
-            if (lastCallInfo.state ==
-                pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
-            {
-                Dispatcher.GetForCurrentThread().Dispatch(() => { callPage.Navigation.PopAsync(); });
-            }
-        });
-
-        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(this, (r, m) =>
-        {
-            lastCallInfo = m.Value as CallInfo;
-
-            if (SoftApp.currentCall.vidWin != null)
-            {
-                incomingView.Visibility = ViewStates.Invisible;
-            }
-        });
-    }
-
-    ~CallPageRenderer()
-    {
-        WeakReferenceMessenger.Default.Unregister<UpdateCallStateMessage>(this);
-        WeakReferenceMessenger.Default.Unregister<UpdateMediaCallStateMessage>(this);
-    }
-
-    protected override void OnLayout(bool changed, int l, int t, int r, int b)
-    {
-        base.OnLayout(changed, l, t, r, b);
-
-        var msw = MeasureSpec.MakeMeasureSpec(r - l, MeasureSpecMode.Exactly);
-        var msh = MeasureSpec.MakeMeasureSpec(b - t, MeasureSpecMode.Exactly);
-
-        view.Measure(msw, msh);
-        view.Layout(0, 0, r - l, b - t);
-    }
-
-    protected override void OnElementChanged(ElementChangedEventArgs<CallView> e)
-    {
-        base.OnElementChanged(e);
-
-        if (e.OldElement != null || Element == null)
-        {
-            return;
-        }
-
-        try
-        {
-            SetupUserInterface();
-            SetupEventHandlers();
-            AddView(view);
-            callPage = (CallPage)Element.Parent;
-            System.Diagnostics.Debug.WriteLine(@"Call page done initialize");
-            if (SoftApp.currentCall != null)
-            {
-                try
-                {
-                    lastCallInfo = SoftApp.currentCall.getInfo();
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(@"ERROR: ", ex.Message);
-                }
-                Dispatcher.GetForCurrentThread().Dispatch(() => updateCallState(lastCallInfo));
-            }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(@"ERROR: ", ex.Message);
-        }
-    }
-     
-
-    void SetupUserInterface()
-    {
-        var activity = this.Context as Activity;
-        view = activity.LayoutInflater.Inflate(Resource.Layout.activity_call, this, false);
+        var view = activity.LayoutInflater.Inflate(Resource.Layout.activity_call, root, false);
 
         incomingView = view.FindViewById<SurfaceView>(Resource.Id.incomingVideoView);
-        incomingView.Holder.AddCallback(this);
+
+        surfaceCallback = new SurfaceCallback(this);
+        incomingView.Holder.AddCallback(surfaceCallback);
 
         peerTxt = view.FindViewById<TextView>(Resource.Id.peerTxt);
         statusTxt = view.FindViewById<TextView>(Resource.Id.statusTxt);
 
-        if (SoftApp.currentCall == null || SoftApp.currentCall.vidWin == null)
+        acceptCallButton = view.FindViewById<global::Android.Widget.Button>(Resource.Id.acceptCallButton);
+        hangupCallButton = view.FindViewById<global::Android.Widget.Button>(Resource.Id.hangupCallButton);
+
+        root.AddView(view);
+
+        return root;
+    }
+
+    protected override void ConnectHandler(ViewGroup platformView)
+    {
+        base.ConnectHandler(platformView);
+
+        callPage = VirtualView;
+
+        SetupEventHandlers();
+
+        WeakReferenceMessenger.Default.Register<UpdateCallStateMessage>(
+            this, (obj, info) =>
+            {
+                if (callPage == null) return;
+
+                lastCallInfo = info.Value;
+                if (lastCallInfo.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        callPage.Navigation.PopAsync();
+                    });
+                }
+                else
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        UpdateCallState(lastCallInfo);
+                    });
+                }
+            });
+
+        WeakReferenceMessenger.Default.Register<UpdateMediaCallStateMessage>(
+            this, (obj, info) =>
+            {
+                lastCallInfo = info.Value;
+                if (SoftApp.CurrentCall?.VudeoWindow != null)
+                {
+                    incomingView.Visibility = ViewStates.Visible;
+                }
+            });
+
+        if (SoftApp.CurrentCall != null)
+        {
+            try
+            {
+                lastCallInfo = SoftApp.CurrentCall.getInfo();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(@"ERROR: ", ex.Message);
+            }
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                UpdateCallState(lastCallInfo);
+            });
+        }
+        else
         {
             incomingView.Visibility = ViewStates.Gone;
         }
     }
 
+    protected override void DisconnectHandler(ViewGroup platformView)
+    {
+        UpdateVideoWindow(false);
+
+        WeakReferenceMessenger.Default.Unregister<UpdateCallStateMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<UpdateMediaCallStateMessage>(this);
+
+        base.DisconnectHandler(platformView);
+    }
+
     void SetupEventHandlers()
     {
-        acceptCallButton = view.FindViewById<global::Android.Widget.Button>(Resource.Id.acceptCallButton);
         acceptCallButton.Click += AcceptCallButtonTapped;
-
-        hangupCallButton = view.FindViewById<global::Android.Widget.Button>(Resource.Id.hangupCallButton);
         hangupCallButton.Click += HangupCallButtonTapped;
     }
 
     void AcceptCallButtonTapped(object sender, EventArgs e)
     {
-        CallOpParam prm = new CallOpParam();
-        prm.statusCode = pjsip_status_code.PJSIP_SC_OK;
+        CallOpParam prm = new()
+        {
+            statusCode = pjsip_status_code.PJSIP_SC_OK
+        };
         try
         {
-            SoftApp.currentCall.answer(prm);
+            SoftApp.CurrentCall?.answer(prm);
         }
         catch (Exception ex)
         {
@@ -137,15 +150,15 @@ public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolder
         acceptCallButton.Visibility = ViewStates.Gone;
     }
 
-    void HangupCallButtonTapped(object sender, EventArgs e)
+    static void HangupCallButtonTapped(object sender, EventArgs e)
     {
-        if (SoftApp.currentCall != null)
+        if (SoftApp.CurrentCall != null)
         {
             CallOpParam prm = new CallOpParam();
             prm.statusCode = pjsip_status_code.PJSIP_SC_DECLINE;
             try
             {
-                SoftApp.currentCall.hangup(prm);
+                SoftApp.CurrentCall.hangup(prm);
             }
             catch (Exception ex)
             {
@@ -153,36 +166,47 @@ public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolder
             }
         }
     }
-
-    private void updateVideoWindow(bool show)
+    private void UpdateVideoWindow(bool show)
     {
-        if (SoftApp.currentCall != null &&
-            SoftApp.currentCall.vidWin != null &&
-            SoftApp.currentCall.vidPrev != null)
+        if (SoftApp.CurrentCall != null &&
+            SoftApp.CurrentCall.VudeoWindow != null &&
+            SoftApp.CurrentCall.VideoPreview != null &&
+            incomingView?.Holder?.Surface != null &&
+            incomingView.Holder.Surface.IsValid)
         {
             long windHandle = 0;
-            VideoWindowHandle vidWH = new VideoWindowHandle();
+            VideoWindowHandle vidWH = new();
+
             if (show)
             {
-                IntPtr winPtr = ANativeWindow_fromSurface(JNIEnv.Handle,
-                                       incomingView.Holder.Surface.Handle);
-                windHandle = winPtr.ToInt64();
+                try
+                {
+                    IntPtr winPtr = ANativeWindow_fromSurface(
+                        JNIEnv.Handle, incomingView.Holder.Surface.Handle);
+                    windHandle = winPtr.ToInt64();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(@"ERROR getting ANativeWindow: " + ex.Message);
+                    return;
+                }
             }
+
             vidWH.handle.setWindow(windHandle);
+
             try
             {
-                SoftApp.currentCall.vidWin.setWindow(vidWH);
+                SoftApp.CurrentCall.VudeoWindow.setWindow(vidWH);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(@"ERROR: ", ex.Message);
+                System.Diagnostics.Debug.WriteLine(@"ERROR setting video window: " + ex.Message);
             }
         }
     }
-
-    private void updateCallState(CallInfo ci)
+    private void UpdateCallState(CallInfo ci)
     {
-        String call_state = "";
+        string call_state = "";
 
         if (ci == null)
         {
@@ -197,13 +221,11 @@ public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolder
             acceptCallButton.Visibility = ViewStates.Gone;
         }
 
-        if (ci.state <
-            pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
+        if (ci.state < pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
         {
             if (ci.role == pjsip_role_e.PJSIP_ROLE_UAS)
             {
                 call_state = "Incoming call..";
-                /* Default button texts are already 'Accept' & 'Reject' */
             }
             else
             {
@@ -211,8 +233,7 @@ public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolder
                 call_state = ci.stateText;
             }
         }
-        else if (ci.state >=
-                   pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
+        else if (ci.state >= pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
         {
             acceptCallButton.Visibility = ViewStates.Gone;
             call_state = ci.stateText;
@@ -220,15 +241,14 @@ public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolder
             {
                 hangupCallButton.Text = "Hangup";
             }
-            else if (ci.state ==
-                       pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+            else if (ci.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
             {
                 hangupCallButton.Text = "OK";
                 call_state = "Call disconnected: " + ci.lastReason;
             }
             if (ci.state == pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED)
             {
-                updateVideoWindow(true);
+                UpdateVideoWindow(true);
             }
         }
 
@@ -236,18 +256,26 @@ public class CallPageRenderer : VisualElementRenderer<CallView> , ISurfaceHolder
         statusTxt.Text = call_state;
     }
 
-    void ISurfaceHolderCallback.SurfaceChanged(ISurfaceHolder holder, Format format, int width, int height)
+    #region ISurfaceHolderCallback
+    // Delegates chamados pela SurfaceCallback
+    internal void OnSurfaceChanged(ISurfaceHolder holder, Format format, int width, int height)
     {
-        updateVideoWindow(true);
+        try { UpdateVideoWindow(true); }
+        catch (Exception e) { System.Diagnostics.Debug.WriteLine("Error on SurfaceChanged: " + e.Message); }
     }
 
-    void ISurfaceHolderCallback.SurfaceCreated(ISurfaceHolder holder)
+    internal void OnSurfaceCreated(ISurfaceHolder holder)
     {
+        try { UpdateVideoWindow(true); }
+        catch (Exception e) { System.Diagnostics.Debug.WriteLine("Error on SurfaceCreated: " + e.Message); }
     }
 
-    void ISurfaceHolderCallback.SurfaceDestroyed(ISurfaceHolder holder)
+    internal void OnSurfaceDestroyed(ISurfaceHolder holder)
     {
-        updateVideoWindow(false);
+        try { UpdateVideoWindow(false); }
+        catch (Exception e) { System.Diagnostics.Debug.WriteLine("Error on SurfaceDestroyed: " + e.Message); }
     }
+    #endregion
+    
 }
 #endif
