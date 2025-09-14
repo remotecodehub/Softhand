@@ -35,7 +35,9 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
 
         var controlWidth = 150;
         var controlHeight = 50;
-        var centerButtonX = rootView.Bounds.GetMidX() - 35f;
+        /**
+         * var centerButtonX = rootView.Bounds.GetMidX() - 35f;
+         */
         var topLeftX = rootView.Bounds.X + 25;
         var topRightX = rootView.Bounds.Right - controlWidth - 25;
         var bottomButtonY = rootView.Bounds.Bottom - 150;
@@ -53,7 +55,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
                                controlHeight)
         };
         acceptCallButton.SetTitle("Accept", UIControlState.Normal);
-        acceptCallButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
+        acceptCallButton.SetTitleColor(UIColor.Green, UIControlState.Normal);
         acceptCallButton.BackgroundColor = UIColor.White;
 
         hangupCallButton = new UIButton()
@@ -62,7 +64,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
                                controlHeight)
         };
         hangupCallButton.SetTitle("Hangup", UIControlState.Normal);
-        hangupCallButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
+        hangupCallButton.SetTitleColor(UIColor.Red, UIControlState.Normal);
         hangupCallButton.BackgroundColor = UIColor.White;
 
         peerLabel = new UILabel
@@ -81,7 +83,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
                                bottomLabelY + controlHeight,
                                rootView.Bounds.Right,
                                controlHeight)
-        };
+        }  ;
 
         rootView.Add(incomingVideoView);
         rootView.Add(acceptCallButton);

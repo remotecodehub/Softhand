@@ -1,5 +1,4 @@
 ﻿#if __ANDROID__
-
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -13,20 +12,18 @@ using Microsoft.Maui.Handlers;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Button = global::Android.Widget.Button;
 namespace Softhand.Platforms.Android;
 
 public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : ViewHandler<CallPage, ViewGroup>(mapper, commandMapper) 
 {
-    global::Android.Widget.Button acceptCallButton;
-    global::Android.Widget.Button hangupCallButton;
-    global::Android.Widget.TextView peerTxt;
-    global::Android.Widget.TextView statusTxt;
+    Button acceptCallButton;
+    Button hangupCallButton;
+    TextView peerTxt;
+    TextView statusTxt;
     private static CallInfo lastCallInfo { get; set; } = new CallInfo();
     private CallPage callPage;
     SurfaceView incomingView; 
-    private SurfaceCallback surfaceCallback; 
-
-     
 
     [DllImport("android")]
     private static extern IntPtr ANativeWindow_fromSurface(IntPtr jni, IntPtr surface);
@@ -40,14 +37,13 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
 
         incomingView = view.FindViewById<SurfaceView>(Resource.Id.incomingVideoView);
 
-        surfaceCallback = new SurfaceCallback(this);
-        incomingView.Holder.AddCallback(surfaceCallback);
+        incomingView.Holder.AddCallback(new SurfaceCallback(this));
 
         peerTxt = view.FindViewById<TextView>(Resource.Id.peerTxt);
         statusTxt = view.FindViewById<TextView>(Resource.Id.statusTxt);
 
-        acceptCallButton = view.FindViewById<global::Android.Widget.Button>(Resource.Id.acceptCallButton);
-        hangupCallButton = view.FindViewById<global::Android.Widget.Button>(Resource.Id.hangupCallButton);
+        acceptCallButton = view.FindViewById<Button>(Resource.Id.acceptCallButton);
+        hangupCallButton = view.FindViewById<Button>(Resource.Id.hangupCallButton);
 
         root.AddView(view);
 

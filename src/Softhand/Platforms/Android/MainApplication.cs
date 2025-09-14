@@ -2,28 +2,28 @@
 using Android.Hardware.Camera2;
 using Android.Runtime;
 using Java.Lang;
+using Microsoft.Maui.Platform;
 
 #pragma warning disable IDE0130 // O namespace não corresponde à estrutura da pasta
 namespace Softhand;
 #pragma warning restore IDE0130 // O namespace não corresponde à estrutura da pasta
 
 [Application]
-public class MainApplication : MauiApplication
+public class MainApplication: MauiApplication
 {
-    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
-    : base(handle, ownership)
+    public MainApplication(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
     {
         try
         {
             IntPtr? class_ref = JNIEnv.FindClass("org/pjsip/PjCameraInfo2");
-            if (class_ref != null)
+            if (class_ref != null && class_ref.HasValue)
             {
                 IntPtr? method_id = JNIEnv.GetStaticMethodID(class_ref.Value,
-                                   "SetCameraManager", "(Landroid/hardware/camera2/CameraManager;)V");
+                    "SetCameraManager", "(Landroid/hardware/camera2/CameraManager;)V");
 
-                if (method_id != null)
+                if (method_id != null && method_id.HasValue)
                 {
-                    CameraManager manager = GetSystemService(Android.Content.Context.CameraService) as CameraManager;
+                    CameraManager manager = this.GetSystemService(Context.CameraService) as CameraManager;
                     JNIEnv.CallStaticVoidMethod(class_ref.Value, method_id.Value, new JValue(manager));
                     Console.WriteLine("SUCCESS setting cameraManager");
                 }
