@@ -27,6 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\ci-build.yml = .github\workflows\ci-build.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{6B35788D-A5C7-41FA-A95B-FAA330E3800B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.yml = .github\ISSUE_TEMPLATE\bug_report.yml
+		.github\ISSUE_TEMPLATE\config.yml = .github\ISSUE_TEMPLATE\config.yml
+		.github\ISSUE_TEMPLATE\feature_request.yml = .github\ISSUE_TEMPLATE\feature_request.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +54,7 @@ Global
 		{4FA9E3C6-071D-4EEB-A487-7DF9F9D5B019} = {BDAFD26B-C1D0-4527-B55E-C97EAEE7183C}
 		{D221A9D3-E7DA-4406-A214-FE1C2F7082F2} = {4FA9E3C6-071D-4EEB-A487-7DF9F9D5B019}
 		{13B629F1-BCEE-4D7C-A3E2-EB4CD42068BC} = {ED8CF65F-FAD3-4AD6-A2EA-31D8A4052902}
+		{6B35788D-A5C7-41FA-A95B-FAA330E3800B} = {ED8CF65F-FAD3-4AD6-A2EA-31D8A4052902}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF9E3B9A-629D-4CB3-BBC8-4E8A5D403AA2}
