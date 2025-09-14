@@ -5,11 +5,13 @@ public class SipStatusColorConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        if (values.Length < 1 || values[0] is not bool registered)
-            return Colors.OrangeRed;
+        var theme = SoftApplication.Current.RequestedTheme;
+        var resources = SoftApplication.Current.Resources;
+        var unespecifiedColor = theme == AppTheme.Dark ? Colors.DarkGray : Colors.LightGray;
 
-        var theme = Microsoft.Maui.Controls.Application.Current.RequestedTheme;
-        var resources = Microsoft.Maui.Controls.Application.Current.Resources;
+        if (values.Length < 1 || values[0] is not bool registered)
+            return unespecifiedColor;
+
 
         string key = (registered, theme) switch
         {
@@ -20,7 +22,7 @@ public class SipStatusColorConverter : IMultiValueConverter
             _ => string.Empty
         };
 
-        return resources.TryGetValue(key, out var color) ? color : Colors.OrangeRed;
+        return resources.TryGetValue(key, out var color) ? color : unespecifiedColor;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) =>

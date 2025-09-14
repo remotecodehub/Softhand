@@ -5,10 +5,7 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
     private readonly ILogger<BuddyViewModel> _logger;
     private readonly ISoftApp _softApp;
     private readonly INavigationContextService<SoftBuddy> _buddyContext;
-
-    [ObservableProperty]
-    private AppTheme RequestedTheme = Microsoft.Maui.Controls.Application.Current.RequestedTheme;
-
+     
     [ObservableProperty]
     private bool registered = false;
 
