@@ -23,13 +23,24 @@
                 Grid.Column="0"
                 FontAttributes="Bold"
                 FontSize="20"
-                HorizontalOptions="Center"
+                HorizontalOptions="Start"
                 Text="{Binding Title}"
                 TextColor="{AppThemeBinding Dark={x:StaticResource OnPrimaryDark},
                                             Light={x:StaticResource OnPrimary}}"
                 VerticalOptions="Center" />
 
-            <Image Grid.Column="1" Source="{FontImageSource FontFamily='MaterialSharp', Glyph={x:Static uranium:MaterialSharp.Sip}, Color={AppThemeBinding Dark={x:StaticResource OnSipOnDark}, Light={x:StaticResource OnSipOn}}}" />
+            <Image Grid.Column="1">
+                <Image.Source>
+                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static uranium:MaterialSharp.Sip}">
+                        <FontImageSource.Color>
+                            <MultiBinding Converter="{StaticResource SipStatusColorConverter}">
+                                <Binding Path="Registered" />
+                                <Binding Path="RequestedTheme" />
+                            </MultiBinding>
+                        </FontImageSource.Color>
+                    </FontImageSource>
+                </Image.Source>
+            </Image>
 
             <ImageButton
                 Grid.Column="2"

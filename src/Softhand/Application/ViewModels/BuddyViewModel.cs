@@ -4,7 +4,16 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
 {
     private readonly ILogger<BuddyViewModel> _logger;
     private readonly ISoftApp _softApp;
-    private readonly INavigationContextService<SoftBuddy> _buddyContext; 
+    private readonly INavigationContextService<SoftBuddy> _buddyContext;
+
+    [ObservableProperty]
+    private AppTheme RequestedTheme = Microsoft.Maui.Controls.Application.Current.RequestedTheme;
+
+    [ObservableProperty]
+    private bool registered = false;
+
+    [ObservableProperty]
+    private string status = string.Empty;
 
     [ObservableProperty]
     private string settingsBtnTxt = string.Empty;
@@ -158,6 +167,7 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
 
     public void notifyChangeNetwork()
     { 
+
     }
 
     public void notifyIncomingCall(SoftCall call)
@@ -185,9 +195,11 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
 
     public void notifyRegState(int code, string reason, long expiration)
     {
+        Registered = (code == (int)pjsip_status_code.PJSIP_SC_OK);
         _logger.LogInformation("Registration Code: {Code}", code);
         _logger.LogInformation("Registration Reason: {Reason}", reason);
         _logger.LogInformation("Registration Expiration: {Expiration}", expiration);
+
     }
 
     #endregion
