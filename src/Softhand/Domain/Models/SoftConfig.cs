@@ -23,7 +23,7 @@ public class SoftConfig
             BuddyConfigs.Clear();
             while (buddiesNode.hasUnread())
             {
-                BuddyConfig budCfg = new BuddyConfig();
+                BuddyConfig budCfg = new();
                 budCfg.readObject(buddiesNode);
                 BuddyConfigs.Add(budCfg);
             }

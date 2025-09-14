@@ -197,7 +197,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
     {
         if (SoftApp.CurrentCall != null)
         {
-            CallOpParam prm = new CallOpParam();
+            CallOpParam prm = new();
             prm.statusCode = pjsip_status_code.PJSIP_SC_DECLINE;
             try
             {

@@ -30,7 +30,7 @@ public partial class AccountConfigViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task Cancel()
+    private async static Task Cancel()
     {
         await Shell.Current.Navigation.PopAsync();
     }

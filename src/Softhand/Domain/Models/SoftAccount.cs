@@ -58,7 +58,7 @@ public class SoftAccount(AccountConfig config) : Account
     override public void onIncomingCall(OnIncomingCallParam prm)
     {
         Console.WriteLine("======== Incoming call ======== ");
-        SoftCall call = new SoftCall(this, prm.callId);
+        SoftCall call = new(this, prm.callId);
         SoftApp.Monitor.NotifyIncomingCall(call);
     }
 

@@ -55,7 +55,6 @@ public static class MauiProgramExtensions
         return builder;
     }
 
-#pragma warning disable CA1416
     public static MauiApp CreateMauiApp(this MauiAppBuilder builder) => builder
         .UseMauiApp<App>()
         .ConfigureUI()
@@ -65,7 +64,6 @@ public static class MauiProgramExtensions
         .AddHandlers()
         .AddViewsAndViewModels()
         .Build();
-#pragma warning restore CA1416
 
 }
  

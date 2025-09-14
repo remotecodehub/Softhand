@@ -179,7 +179,7 @@ public class SoftApp(ILogger<SoftApp> _logger) : ISoftApp
 
     public void LoadConfig(string filename)
     {
-        JsonDocument json = new JsonDocument();
+        JsonDocument json = new();
         try
         {
             /* Load file */

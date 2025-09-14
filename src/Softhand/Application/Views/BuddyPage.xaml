@@ -85,7 +85,7 @@
                     VerticalOptions="Fill">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:SoftBuddy">
-                            <TextCell Text="{Binding cfg.uri}" />
+                            <TextCell Text="{Binding Configuration.uri}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

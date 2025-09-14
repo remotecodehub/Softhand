@@ -176,7 +176,7 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
 
     public void NotifyIncomingCall(SoftCall call)
     {
-        CallOpParam prm = new CallOpParam();
+        CallOpParam prm = new();
 
         if (SoftApp.CurrentCall != null)
         {

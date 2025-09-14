@@ -150,8 +150,10 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
     {
         if (SoftApp.CurrentCall != null)
         {
-            CallOpParam prm = new CallOpParam();
-            prm.statusCode = pjsip_status_code.PJSIP_SC_DECLINE;
+            CallOpParam prm = new()
+            {
+                statusCode = pjsip_status_code.PJSIP_SC_DECLINE
+            };
             try
             {
                 SoftApp.CurrentCall.hangup(prm);

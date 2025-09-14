@@ -9,9 +9,9 @@ namespace Softhand;
 #pragma warning restore IDE0130 // O namespace não corresponde à estrutura da pasta
 
 [Application]
-public class MainApplication: MauiApplication
+public class MainApplication(IntPtr handle, JniHandleOwnership ownership) : MauiApplication(handle, ownership)
 {
-    public MainApplication(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
+    public override void OnCreate()
     {
         try
         {
@@ -43,9 +43,8 @@ public class MainApplication: MauiApplication
                 Android.Util.Log.Error("MainApplication", $"INNER: {ex.InnerException}");
             throw;
         }
+        base.OnCreate();
     }
-
-
     protected override MauiApp CreateMauiApp()
     {
         try

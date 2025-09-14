@@ -3,9 +3,6 @@ using Softhand.Domain.Models;
 
 namespace Softhand.Infrastructure.Messages;
 
-public class SaveAccountConfigMessage : ValueChangedMessage<SoftAccountConfigModel>
+public class SaveAccountConfigMessage(SoftAccountConfigModel softAccountConfigModel) : ValueChangedMessage<SoftAccountConfigModel>(softAccountConfigModel)
 {
-	public SaveAccountConfigMessage(SoftAccountConfigModel softAccountConfigModel) : base (softAccountConfigModel)
-	{
-	}
 }
