@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Softhand.Application.Views.BuddyPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+    xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:models="clr-namespace:Softhand.Domain.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+    xmlns:viewModels="clr-namespace:Softhand.Application.ViewModels"
+    x:DataType="viewModels:BuddyPageViewModel">
+
+    <Shell.TitleView>
+        <Grid ColumnSpacing="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="{Binding Title}"
+                TextColor="{AppThemeBinding Dark={x:StaticResource OnPrimaryDark},
+                                            Light={x:StaticResource OnPrimary}}"
+                VerticalOptions="Center" />
+
+            <ImageButton
+                Grid.Column="1"
+                IsVisible="{Binding Registered}"
+                Source="{FontImageSource FontFamily='MaterialSharp',
+                                         Glyph={x:Static uranium:MaterialSharp.Signal_cellular_4_bar},
+                                         Color={AppThemeBinding Dark={x:StaticResource OnSipOnDark},
+                                                                Default={x:StaticResource OnSipOn},
+                                                                Light={x:StaticResource OnSipOn}}}" />
+
+            <ImageButton
+                Grid.Column="1"
+                IsVisible="{Binding Unregistered}"
+                Source="{FontImageSource FontFamily='MaterialSharp',
+                                         Glyph={x:Static uranium:MaterialSharp.Signal_cellular_connected_no_internet_4_bar},
+                                         Color={AppThemeBinding Dark={x:StaticResource OnSipOffDark},
+                                                                Default={x:StaticResource OnSipOff},
+                                                                Light={x:StaticResource OnSipOff}}}" />
+
+            <ImageButton
+                Grid.Column="2"
+                Command="{Binding NavigateSettingsCommand}"
+                Source="{FontImageSource FontFamily='MaterialSharp',
+                                         Glyph={x:Static uranium:MaterialSharp.Settings},
+                                         Color={AppThemeBinding Dark={x:StaticResource OnPrimaryDark},
+                                                                Default={x:StaticResource OnPrimary},
+                                                                Light={x:StaticResource OnPrimary}}}" />
+            <ImageButton
+                Grid.Column="3"
+                Command="{Binding UnregisterCommand}"
+                Source="{FontImageSource FontFamily='MaterialSharp',
+                                         Glyph={x:Static uranium:MaterialSharp.Logout},
+                                         Color={AppThemeBinding Dark={x:StaticResource OnPrimaryDark},
+                                                                Default={x:StaticResource OnPrimary},
+                                                                Light={x:StaticResource OnPrimary}}}" />
+        </Grid>
+
+    </Shell.TitleView>
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Content>
+        <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+            <StackLayout VerticalOptions="Fill">
+                <ListView
+                    CachingStrategy="RecycleElement"
+                    HasUnevenRows="true"
+                    IsPullToRefreshEnabled="true"
+                    IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                    ItemsSource="{Binding Buddies}"
+                    RefreshCommand="{Binding LoadBuddiesCommand}"
+                    SelectedItem="{Binding SelectedBuddy}"
+                    VerticalOptions="Fill">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:SoftBuddy">
+                            <TextCell Text="{Binding Configuration.uri}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                VerticalOptions="End" />
+            <Grid
+                ColumnDefinitions="*,*,*,*"
+                HorizontalOptions="Fill"
+                VerticalOptions="End">
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding CallCommand}"
+                    Text="Call" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding AddCommand}"
+                    Text="Add" />
+                <Button
+                    Grid.Column="2"
+                    Command="{Binding EditCommand}"
+                    Text="Edit" />
+                <Button
+                    Grid.Column="3"
+                    Command="{Binding DeleteCommand}"
+                    Text="Remove" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

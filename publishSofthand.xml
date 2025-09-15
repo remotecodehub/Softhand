@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Softhand</name>
+    </assembly>
+    <members>
+        <member name="T:Softhand.Application.ViewModels.AccountConfigPageViewModel">
+            <summary>
+            View model para página de configuração de conta sip
+            </summary>
+            <remarks>
+            Herda de <see cref="T:Softhand.Application.ViewModels.BaseViewModel"/>.
+            </remarks>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.AccountConfig">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.AccountConfigPageViewModel.accountConfig"/>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.AccountConfigPageViewModel.initCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.InitCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.InitCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.AccountConfigPageViewModel.Init(Softhand.Domain.Models.SoftConfig)"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.AccountConfigPageViewModel.okCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.OkCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.OkCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.AccountConfigPageViewModel.Ok"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.AccountConfigPageViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AccountConfigPageViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.AccountConfigPageViewModel.Cancel"/>.</summary>
+        </member>
+        <member name="T:Softhand.Application.ViewModels.AVConfigPageViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AVConfigPageViewModel.CancelBtnTxt">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.AVConfigPageViewModel.cancelBtnTxt"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AVConfigPageViewModel.OkBtnTxt">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.AVConfigPageViewModel.okBtnTxt"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AVConfigPageViewModel.AccountConfig">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.AVConfigPageViewModel.accountConfig"/>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.AVConfigPageViewModel.initCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.AVConfigPageViewModel.InitCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AVConfigPageViewModel.InitCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.AVConfigPageViewModel.Init(Softhand.Domain.Models.SoftConfig)"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.AVConfigPageViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.AVConfigPageViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AVConfigPageViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.AVConfigPageViewModel.Save"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.AVConfigPageViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.AVConfigPageViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.AVConfigPageViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.AVConfigPageViewModel.Cancel"/>.</summary>
+        </member>
+        <member name="T:Softhand.Application.ViewModels.BaseViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BaseViewModel.IsBusy">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BaseViewModel.isBusy"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BaseViewModel.Title">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BaseViewModel.title"/>
+        </member>
+        <member name="T:Softhand.Application.ViewModels.BuddyConfigPageViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.IsEditMode">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.isEditMode"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.Subscribe">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.subscribe"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.Uri">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.uri"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.BuddyConfig">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel._buddyConfig"/>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.initCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.InitCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.InitCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyConfigPageViewModel.Init(pjsua2maui.pjsua2.BuddyConfig)"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.appearingCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.AppearingCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.AppearingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyConfigPageViewModel.OnAppearing"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.okCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.OkCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.OkCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyConfigPageViewModel.Ok"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyConfigPageViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyConfigPageViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyConfigPageViewModel.Cancel"/>.</summary>
+        </member>
+        <member name="T:Softhand.Application.ViewModels.BuddyPageViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.Registered">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.registered"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.Unregistered">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.unregistered"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.Status">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.status"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.SettingsBtnTxt">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.settingsBtnTxt"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.UnregisterBtnTxt">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.unregisterBtnTxt"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.SelectedBuddy">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.selectedBuddy"/>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.Buddies">
+            <inheritdoc cref="F:Softhand.Application.ViewModels.BuddyPageViewModel.buddies"/>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.addCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.AddCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.AddCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.Add"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.Delete"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.editCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.EditCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.EditCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.Edit"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.callCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.CallCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.CallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.Call"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.appearingCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.AppearingCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.AppearingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.OnAppearing"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.unregisterCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.UnregisterCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.UnregisterCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.Unregister"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.navigateSettingsCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.NavigateSettingsCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.NavigateSettingsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.NavigateSettings"/>.</summary>
+        </member>
+        <member name="F:Softhand.Application.ViewModels.BuddyPageViewModel.loadBuddiesCommand">
+            <summary>The backing field for <see cref="P:Softhand.Application.ViewModels.BuddyPageViewModel.LoadBuddiesCommand"/>.</summary>
+        </member>
+        <member name="P:Softhand.Application.ViewModels.BuddyPageViewModel.LoadBuddiesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:Softhand.Application.ViewModels.BuddyPageViewModel.LoadBuddies"/>.</summary>
+        </member>
+        <member name="M:Softhand.Infrastructure.Extensions.StringExtensions.ExtractSipServerFromSipIdUri(System.String)">
+            <summary>
+            Extrai o endereço do sip server de uma uri sip
+            </summary>
+            <param name="sipIdUri">a uri like 'sip:420@pbx.local' or 'sip:pbx.local'</param>
+            <returns>uma string com o endereço do sip server, e.g.: pbx.local</returns>
+        </member>
+        <member name="M:Softhand.Infrastructure.Extensions.StringExtensions.ExtractSipIdFromSipIdUri(System.String)">
+            <summary>
+            Extrai o Id SIP de um URI SIP 
+            </summary>
+            <param name="sipIdUri">uma string sip uri do tipo 'sip:420@pbx.local'</param>
+            <returns></returns>
+        </member>
+        <member name="M:Softhand.Infrastructure.Extensions.StringExtensions.BuildSipIdUriFromSingleId(System.String,System.String)">
+            <summary>
+            Construi uma string Sip Id Uri
+            </summary>
+            <param name="id">Sip Id</param>
+            <param name="server">Sip Server</param>
+            <returns>Uma string sip id uri do tipo 'sip:420@pbx.local'</returns>
+        </member>
+        <member name="T:Softhand.Resources.Strings.Strings">
+            <summary>
+              Uma classe de recurso de tipo de alta segurança, para pesquisar cadeias de caracteres localizadas etc.
+            </summary>
+        </member>
+        <member name="P:Softhand.Resources.Strings.Strings.ResourceManager">
+            <summary>
+              Retorna a instância de ResourceManager armazenada em cache usada por essa classe.
+            </summary>
+        </member>
+        <member name="P:Softhand.Resources.Strings.Strings.Culture">
+            <summary>
+              Substitui a propriedade CurrentUICulture do thread atual para todas as
+              pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
+            </summary>
+        </member>
+        <member name="T:Softhand.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_DatePicker.TextColorTo(Microsoft.Maui.Controls.DatePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Editor.TextColorTo(Microsoft.Maui.Controls.Editor,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Entry.TextColorTo(Microsoft.Maui.Controls.Entry,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_InputView.TextColorTo(Microsoft.Maui.Controls.InputView,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Label.TextColorTo(Microsoft.Maui.Controls.Label,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Picker.TextColorTo(Microsoft.Maui.Controls.Picker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_RadioButton.TextColorTo(Microsoft.Maui.Controls.RadioButton,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_SearchBar.TextColorTo(Microsoft.Maui.Controls.SearchBar,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_TimePicker.TextColorTo(Microsoft.Maui.Controls.TimePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AccountConfig">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AccountConfig" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CancelBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CancelBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OkBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OkBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsEditMode">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsEditMode" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Subscribe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Subscribe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Uri">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Uri" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.BuddyConfig">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "BuddyConfig" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Registered">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Registered" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Unregistered">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Unregistered" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Status">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Status" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SettingsBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SettingsBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UnregisterBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UnregisterBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedBuddy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedBuddy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Buddies">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Buddies" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AccountConfig">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AccountConfig" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CancelBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CancelBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OkBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OkBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsEditMode">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsEditMode" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Subscribe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Subscribe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Uri">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Uri" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.BuddyConfig">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "BuddyConfig" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Registered">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Registered" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Unregistered">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Unregistered" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Status">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Status" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SettingsBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SettingsBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UnregisterBtnTxt">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UnregisterBtnTxt" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedBuddy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedBuddy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Buddies">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Buddies" generated properties.</summary>
+        </member>
+    </members>
+</doc>
