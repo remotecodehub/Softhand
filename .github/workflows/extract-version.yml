@@ -17,12 +17,20 @@ jobs:
         run: |
           VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" ${{ github.workspace }}/src/Softhand/Softhand.csproj)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "::set-output name=version::$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Create version badge
-        uses: schneegans/dynamic-badges-action@v1.6.0
+      - name: Generate version badge SVG
+        run: |
+          VERSION=${{ steps.get_version.outputs.version }}
+          echo "<svg xmlns='http://www.w3.org/2000/svg' width='120' height='20'> <rect width='120' height='20' fill='#00FFFF'/> <text x='10' y='14' font-family='Verdana' font-size='12' fill='#000'>version: $VERSION</text></svg>" > version-badge.svg
+
+      - name: Move badge to repo folder
+        run: |
+          mkdir -p badges
+          mv version-badge.svg badges/version.svg
+
+      - name: Commit badge to repo
+        uses: EndBug/add-and-commit@v9
         with:
-          auth: ${{ secrets.GITHUB_TOKEN }}
-          label: version
-          message: ${{ steps.get_version.outputs.version }}
-          color: blue
+          message: "chore: update version badge to ${{ steps.get_version.outputs.version }}"
+          add: "badges/version.svg"
