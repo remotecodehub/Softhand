@@ -34,17 +34,17 @@ public static class MauiProgramExtensions
     {
         builder.ConfigureMauiHandlers(handlerCollection =>
         {
-			handlerCollection.AddHandler<CallPage, CallPageHandler>();
+			handlerCollection.AddHandler<CallView, CallPageHandler>();
         });
         return builder;
     }
     public static MauiAppBuilder AddViewsAndViewModels(this MauiAppBuilder builder)
     {
-        builder.Services.AddSingletonWithShellRoute<AVConfigPage, AVConfigViewModel>(Routes.AvConfigPage);
-        builder.Services.AddSingletonWithShellRoute<AccountConfigPage, AccountConfigViewModel>(Routes.AccountConfigPage);
-        builder.Services.AddSingletonWithShellRoute<BuddyPage, BuddyViewModel>(Routes.BuddyPage);
-        builder.Services.AddSingletonWithShellRoute<BuddyConfigPage, BuddyConfigViewModel>(Routes.BuddyConfigPage);
-        builder.Services.AddTransientWithShellRoute<CallPage, CallViewModel>(Routes.CallPage);
+        builder.Services.AddSingletonWithShellRoute<AVConfigPage, AVConfigPageViewModel>(Routes.AvConfigPage);
+        builder.Services.AddSingletonWithShellRoute<AccountConfigPage, AccountConfigPageViewModel>(Routes.AccountConfigPage);
+        builder.Services.AddSingletonWithShellRoute<BuddyPage, BuddyPageViewModel>(Routes.BuddyPage);
+        builder.Services.AddSingletonWithShellRoute<BuddyConfigPage, BuddyConfigPageViewModel>(Routes.BuddyConfigPage);
+        builder.Services.AddTransientWithShellRoute<CallPage, CallPageViewModel>(Routes.CallPage);
         return builder;
     }
      

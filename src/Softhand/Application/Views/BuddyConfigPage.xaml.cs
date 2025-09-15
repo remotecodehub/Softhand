@@ -2,7 +2,7 @@
 {
     public partial class BuddyConfigPage : ContentPage
     { 
-        public BuddyConfigPage(BuddyConfigViewModel viewModel)
+        public BuddyConfigPage(BuddyConfigPageViewModel viewModel)
         {
             InitializeComponent();
             BindingContext = viewModel;   

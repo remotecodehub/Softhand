@@ -2,7 +2,7 @@
 
 public partial class CallPage : ContentPage
 {    
-    public CallPage (CallViewModel viewModel)
+    public CallPage (CallPageViewModel viewModel)
     {
         InitializeComponent ();
         BindingContext = viewModel; 

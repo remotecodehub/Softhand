@@ -21,12 +21,14 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
     Button hangupCallButton;
     TextView peerTxt;
     TextView statusTxt;
-    private static CallInfo lastCallInfo { get; set; } = new CallInfo();
+    private static CallInfo LastCallInfo { get; set; } = new CallInfo();
     private CallPage callPage;
     SurfaceView incomingView; 
 
     [DllImport("android")]
+#pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' em vez de 'DllImportAttribute' para gerar código de marshalling P/Invoke no tempo de compilação
     private static extern IntPtr ANativeWindow_fromSurface(IntPtr jni, IntPtr surface);
+#pragma warning restore SYSLIB1054 // Use 'LibraryImportAttribute' em vez de 'DllImportAttribute' para gerar código de marshalling P/Invoke no tempo de compilação
 
     protected override ViewGroup CreatePlatformView()
     {
@@ -63,8 +65,8 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
             {
                 if (callPage == null) return;
 
-                lastCallInfo = info.Value;
-                if (lastCallInfo.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
+                LastCallInfo = info.Value;
+                if (LastCallInfo.state == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
@@ -75,7 +77,7 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        UpdateCallState(lastCallInfo);
+                        UpdateCallState(LastCallInfo);
                     });
                 }
             });
@@ -83,7 +85,7 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
         WeakReferenceMessenger.Default.Register<UpdateMediaCallStateMessage>(
             this, (obj, info) =>
             {
-                lastCallInfo = info.Value;
+                LastCallInfo = info.Value;
                 if (SoftApp.CurrentCall?.VudeoWindow != null)
                 {
                     incomingView.Visibility = ViewStates.Visible;
@@ -94,7 +96,7 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
         {
             try
             {
-                lastCallInfo = SoftApp.CurrentCall.getInfo();
+                LastCallInfo = SoftApp.CurrentCall.getInfo();
             }
             catch (Exception ex)
             {
@@ -103,7 +105,7 @@ public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                UpdateCallState(lastCallInfo);
+                UpdateCallState(LastCallInfo);
             });
         }
         else

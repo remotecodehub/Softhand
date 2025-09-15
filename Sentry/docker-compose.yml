@@ -58,7 +58,7 @@ services:
       RELAY_MODE: proxy
 
   sentry:
-    image: sentry:latest
+    image: getsentry/sentry:24.6.0
     depends_on:
       - postgres
       - redis
@@ -75,6 +75,8 @@ services:
       SENTRY_REDIS_HOST: redis
     ports:
       - "9000:9000"
+    volumes:
+      - ./sentry/config/sentry.conf.py:/etc/sentry/sentry.conf.py
     command: ["sentry", "run", "web"]
 
 volumes:

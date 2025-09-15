@@ -6,7 +6,7 @@ namespace Softhand.Application.Views;
 
 public partial class AVConfigPage : ContentPage
 {
-    public AVConfigPage(AVConfigViewModel viewModel)
+    public AVConfigPage(AVConfigPageViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

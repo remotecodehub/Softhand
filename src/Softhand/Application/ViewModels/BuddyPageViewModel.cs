@@ -1,8 +1,8 @@
 ﻿namespace Softhand.Application.ViewModels;
 
-public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
+public partial class BuddyPageViewModel : BaseViewModel, ISoftMonitor
 {
-    private readonly ILogger<BuddyViewModel> _logger;
+    private readonly ILogger<BuddyPageViewModel> _logger;
     private readonly ISoftApp _softApp;
     private readonly INavigationContextService<SoftBuddy> _buddyContext;
      
@@ -27,7 +27,7 @@ public partial class BuddyViewModel : BaseViewModel, ISoftMonitor
     [ObservableProperty]
     private ObservableCollection<SoftBuddy> buddies = [];
 
-    public BuddyViewModel(ILogger<BuddyViewModel> logger, ISoftApp app, INavigationContextService<SoftBuddy> buddyContext)
+    public BuddyPageViewModel(ILogger<BuddyPageViewModel> logger, ISoftApp app, INavigationContextService<SoftBuddy> buddyContext)
     {
         Title = "Buddies";
         SettingsBtnTxt = "Settings";

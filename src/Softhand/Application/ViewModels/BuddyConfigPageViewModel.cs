@@ -1,10 +1,10 @@
 ﻿namespace Softhand.Application.ViewModels;
 [QueryProperty(nameof(IsEditMode), "isEditMode")]
 
-public partial class BuddyConfigViewModel : BaseViewModel
+public partial class BuddyConfigPageViewModel : BaseViewModel
 {
     private readonly INavigationContextService<SoftBuddy> _buddyContext; 
-    private readonly ILogger<BuddyConfigViewModel> _logger;
+    private readonly ILogger<BuddyConfigPageViewModel> _logger;
     
     [ObservableProperty]
     private bool isEditMode;
@@ -18,7 +18,7 @@ public partial class BuddyConfigViewModel : BaseViewModel
     [ObservableProperty]
     private BuddyConfig _buddyConfig = default!;
 
-    public BuddyConfigViewModel(ILogger<BuddyConfigViewModel> logger, INavigationContextService<SoftBuddy> buddyNavigationContext )
+    public BuddyConfigPageViewModel(ILogger<BuddyConfigPageViewModel> logger, INavigationContextService<SoftBuddy> buddyNavigationContext )
     { 
         this._buddyContext = buddyNavigationContext; 
         this._logger = logger;

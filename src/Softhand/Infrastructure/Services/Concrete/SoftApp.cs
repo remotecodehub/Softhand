@@ -1,6 +1,4 @@
-﻿using pjsua2maui.pjsua2;
-
-namespace Softhand.Infrastructure.Services.Concrete;
+﻿namespace Softhand.Infrastructure.Services.Concrete;
 public class SoftApp(ILogger<SoftApp> _logger) : ISoftApp
 {
     public static ISoftMonitor Monitor { get; set; }
@@ -208,8 +206,10 @@ public class SoftApp(ILogger<SoftApp> _logger) : ISoftApp
 
     public void BuildAccountConfigs()
     {
-        SoftConfig tmpAccCfg = new();
-        tmpAccCfg.AccountConfig = Account.Configuration;
+        SoftConfig tmpAccCfg = new()
+        {
+            AccountConfig = Account.Configuration
+        };
 
         tmpAccCfg.BuddyConfigs.Clear();
         for (int j = 0; j < Account.BuddyList.Count; j++)

@@ -14,20 +14,15 @@ using UIKit;
 
 namespace Softhand.Platforms.iOS;
 
-public class CallPageHandler : ViewHandler<CallPage, UIView>
+public class CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : ViewHandler<CallPage, UIView>(mapper, commandMapper)
 {
     UIView incomingVideoView;
     UIButton acceptCallButton;
     UIButton hangupCallButton;
     UILabel peerLabel;
     UILabel callStatusLabel;
-    private static CallInfo lastCallInfo { get; set; } = new CallInfo();
+    private static CallInfo LastCallInfo { get; set; } = new CallInfo();
     private CallPage callPage;
-
-    public CallPageHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : base(mapper, commandMapper)
-    {
-       
-    }
 
     protected override UIView CreatePlatformView()
     {
@@ -108,10 +103,10 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
                 SoftApp.LastCallInfo = message.Value;
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    UpdateCallState(lastCallInfo);
+                    UpdateCallState(LastCallInfo);
                 });
 
-                if (lastCallInfo.state ==
+                if (LastCallInfo.state ==
                     pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
@@ -124,7 +119,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
         WeakReferenceMessenger.Default.Register<UpdateMediaCallStateMessage>(
             this, (obj, info) =>
             {
-                lastCallInfo = info.Value;
+                LastCallInfo = info.Value;
 
                 if (SoftApp.CurrentCall?.VudeoWindow != null)
                 {
@@ -136,7 +131,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
         {
             try
             {
-                lastCallInfo = SoftApp.CurrentCall.getInfo();
+                LastCallInfo = SoftApp.CurrentCall.getInfo();
             }
             catch (Exception ex)
             {
@@ -145,7 +140,7 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                UpdateCallState(lastCallInfo);
+                UpdateCallState(LastCallInfo);
             });
         }
         else
@@ -166,12 +161,12 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
 
     void SetupEventHandlers()
     {
-        acceptCallButton.TouchUpInside += (object sender, EventArgs e) =>
+        acceptCallButton.TouchUpInside += (sender, e) =>
         {
             AcceptCall();
         };
 
-        hangupCallButton.TouchUpInside += (object sender, EventArgs e) =>
+        hangupCallButton.TouchUpInside += (sender, e) =>
         {
             HangupCall();
         };
@@ -179,8 +174,10 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
 
     void AcceptCall()
     {
-        CallOpParam prm = new CallOpParam();
-        prm.statusCode = pjsip_status_code.PJSIP_SC_OK;
+        CallOpParam prm = new()
+        {
+            statusCode = pjsip_status_code.PJSIP_SC_OK
+        };
         try
         {
             SoftApp.CurrentCall?.answer(prm);
@@ -197,8 +194,10 @@ public class CallPageHandler : ViewHandler<CallPage, UIView>
     {
         if (SoftApp.CurrentCall != null)
         {
-            CallOpParam prm = new();
-            prm.statusCode = pjsip_status_code.PJSIP_SC_DECLINE;
+            CallOpParam prm = new()
+            {
+                statusCode = pjsip_status_code.PJSIP_SC_DECLINE
+            };
             try
             {
                 SoftApp.CurrentCall.hangup(prm);

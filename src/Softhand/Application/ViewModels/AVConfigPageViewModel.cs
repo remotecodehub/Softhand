@@ -1,6 +1,6 @@
 ﻿namespace Softhand.Application.ViewModels;
 
-public partial class AVConfigViewModel : BaseViewModel
+public partial class AVConfigPageViewModel : BaseViewModel
 {
 
     [ObservableProperty]

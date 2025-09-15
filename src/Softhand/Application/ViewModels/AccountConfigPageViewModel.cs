@@ -10,7 +10,7 @@ namespace Softhand.Application.ViewModels;
 /// <remarks>
 /// Herda de <see cref="BaseViewModel"/>.
 /// </remarks>
-public partial class AccountConfigViewModel : BaseViewModel
+public partial class AccountConfigPageViewModel : BaseViewModel
 { 
 
     [ObservableProperty]

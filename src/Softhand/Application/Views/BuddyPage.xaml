@@ -9,7 +9,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:viewModels="clr-namespace:Softhand.Application.ViewModels"
-    x:DataType="viewModels:BuddyViewModel">
+    x:DataType="viewModels:BuddyPageViewModel">
 
     <Shell.TitleView>
         <Grid ColumnSpacing="15">

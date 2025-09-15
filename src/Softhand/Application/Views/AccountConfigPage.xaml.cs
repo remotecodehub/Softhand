@@ -2,7 +2,7 @@
 
 public partial class AccountConfigPage : ContentPage
 {
-    public AccountConfigPage(AccountConfigViewModel viewModel)
+    public AccountConfigPage(AccountConfigPageViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
